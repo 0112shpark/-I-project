@@ -118,14 +118,10 @@ function App() {
           </h1>
         </div>
         <div className="buttons">
-          <a id="signUp" className="buttons__signup" href="#">
+          <a id="signUp" className="buttons__signup">
             Sign up
           </a>
-          <a
-            id="login"
-            className="buttons__signup buttons__signup--login"
-            href="#"
-          >
+          <a id="login" className="buttons__signup buttons__signup--login">
             Login
           </a>
         </div>
