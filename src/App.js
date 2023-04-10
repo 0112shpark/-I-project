@@ -1,9 +1,7 @@
 import "./App.css";
 
 function App() {
-  window.addEventListener("load", start);
-
-  function start() {
+  const start = () => {
     /* ===========================
     Elements Selectors
 ============================ */
@@ -102,7 +100,8 @@ function App() {
 
       transition(elms, properties);
     };
-  }
+  };
+  window.addEventListener("load", start);
 
   return (
     <section className="form-container">
