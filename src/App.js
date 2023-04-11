@@ -1,107 +1,118 @@
 import "./App.css";
-
+import { useState, useEffect } from "react";
 function App() {
-  //   const start = () => {
-  //     /* ===========================
-  //     Elements Selectors
-  // ============================ */
+  // const start = () => {
+  /* ===========================
+      Elements Selectors
+  ============================ */
+  const [elm, setelm] = useState({});
+  const [props, setProps] = useState({});
+  const [elms, setElms] = useState([]);
 
-  //     const elm = {
-  //       arrow: document.querySelector(".form-container__arrow"),
-  //       overlay: document.querySelector(".overlay"),
-  //       title: document.querySelector(".title"),
-  //       signUpButton: document.querySelector(".buttons__signup"),
-  //       loginButton: document.querySelector(".buttons__signup--login"),
-  //       loginForm: document.querySelector(".login-form"),
-  //       registerForm: document.querySelector(".login-form--register"),
-  //     };
+  useEffect(() => {
+    setelm({
+      arrow: document.querySelector(".form-container__arrow"),
+      overlay: document.querySelector(".overlay"),
+      title: document.querySelector(".title"),
+      signUpButton: document.querySelector(".buttons__signup"),
+      loginButton: document.querySelector(".buttons__signup--login"),
+      loginForm: document.querySelector(".login-form"),
+      registerForm: document.querySelector(".login-form--register"),
+    });
+    setProps({
+      left: "left: 20px;",
+      bottom: "bottom: -500px;",
+      transition1: "transition: bottom 1s;",
+      transition2: "transition: bottom 2s;",
+      opacity0: "opacity: 0;",
+      opacity1: "opacity: 1;",
+      trnsDelay: "transition-delay: 1s;",
+      zIndex: "z-index: 6;",
+      left0: "left: 0;",
+      trnsDelay0: "transition-delay: 0s;",
+      zIndex0: "z-index: 0;",
+      leftM120: "left: -120px;",
+    });
+    setElms([
+      elm.arrow,
+      elm.overlay,
+      elm.title,
+      elm.signUpButton,
+      elm.loginButton,
+      elm.loginForm,
+      elm.registerForm,
+    ]);
+  }, [
+    elm.arrow,
+    elm.loginButton,
+    elm.loginForm,
+    elm.overlay,
+    elm.registerForm,
+    elm.signUpButton,
+    elm.title,
+  ]);
 
-  //     /* ===========================
-  //     Properties Object
-  // ============================ */
+  /* ===========================
+      Properties Object
+  ============================ */
 
-  //     const props = {
-  //       left: "left: 20px;",
-  //       bottom: "bottom: -500px;",
-  //       transition1: "transition: bottom 1s;",
-  //       transition2: "transition: bottom 2s;",
-  //       opacity0: "opacity: 0;",
-  //       opacity1: "opacity: 1;",
-  //       trnsDelay: "transition-delay: 1s;",
-  //       zIndex: "z-index: 6;",
-  //       left0: "left: 0;",
-  //       trnsDelay0: "transition-delay: 0s;",
-  //       zIndex0: "z-index: 0;",
-  //       leftM120: "left: -120px;",
-  //     };
+  /* ===========================
+      Elements Array
+  ============================ */
 
-  //     /* ===========================
-  //     Elements Array
-  // ============================ */
+  function transition(elements, props) {
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].setAttribute("style", `${props[i]}`);
+    }
+  }
 
-  //     const elms = [
-  //       elm.arrow,
-  //       elm.overlay,
-  //       elm.title,
-  //       elm.signUpButton,
-  //       elm.loginButton,
-  //       elm.loginForm,
-  //       elm.registerForm,
-  //     ];
+  /* ===========================
+      Events
+  ============================ */
 
-  //     function transition(elements, props) {
-  //       for (let i = 0; i < elements.length; i++) {
-  //         elements[i].setAttribute("style", `${props[i]}`);
-  //       }
-  //     }
+  const handleClick = () => {
+    const properties = [
+      props.left,
+      props.opacity0,
+      props.opacity0,
+      `${props.transition1} ${props.bottom}`,
+      `${props.transition2} ${props.bottom}`,
+      props.opacity0,
+      `${props.opacity1} ${props.trnsDelay} ${props.zIndex}`,
+    ];
+    console.log(elms);
+    transition(elms, properties);
+  };
 
-  //     /* ===========================
-  //     Events
-  // ============================ */
+  // document.getElementById("login").onclick = function () {
+  //   const properties = [
+  //     props.left,
+  //     props.opacity0,
+  //     props.opacity0,
+  //     `${props.transition1} ${props.bottom}`,
+  //     `${props.transition2} ${props.bottom}`,
+  //     `${props.opacity1} ${props.trnsDelay} ${props.zIndex}`,
+  //     props.opacity0,
+  //   ];
 
-  //     document.getElementById("signUp").onclick = function () {
-  //       const properties = [
-  //         props.left,
-  //         props.opacity0,
-  //         props.opacity0,
-  //         `${props.transition1} ${props.bottom}`,
-  //         `${props.transition2} ${props.bottom}`,
-  //         props.opacity0,
-  //         `${props.opacity1} ${props.trnsDelay} ${props.zIndex}`,
-  //       ];
+  //   transition(elms, properties);
+  // };
 
-  //       transition(elms, properties);
-  //     };
+  // document.getElementById("arrowClick").onclick = function () {
+  //   const properties = [
+  //     props.leftM120,
+  //     props.opacity1,
+  //     props.opacity1,
+  //     props.opacity1,
+  //     props.opacity1,
+  //     `${props.opacity0} ${props.trnsDelay0} ${props.zIndex0}`,
+  //     `${props.opacity0} ${props.trnsDelay0} ${props.zIndex0}`,
+  //   ];
 
-  //     document.getElementById("login").onclick = function () {
-  //       const properties = [
-  //         props.left,
-  //         props.opacity0,
-  //         props.opacity0,
-  //         `${props.transition1} ${props.bottom}`,
-  //         `${props.transition2} ${props.bottom}`,
-  //         `${props.opacity1} ${props.trnsDelay} ${props.zIndex}`,
-  //         props.opacity0,
-  //       ];
-
-  //       transition(elms, properties);
-  //     };
-
-  //     document.getElementById("arrowClick").onclick = function () {
-  //       const properties = [
-  //         props.leftM120,
-  //         props.opacity1,
-  //         props.opacity1,
-  //         props.opacity1,
-  //         props.opacity1,
-  //         `${props.opacity0} ${props.trnsDelay0} ${props.zIndex0}`,
-  //         `${props.opacity0} ${props.trnsDelay0} ${props.zIndex0}`,
-  //       ];
-
-  //       transition(elms, properties);
-  //     };
-  //   };
-  //   window.addEventListener("load", start);
+  //   transition(elms, properties);
+  // };
+  // };
+  // window.addEventListener("load", start);
 
   return (
     <section className="form-container">
@@ -118,12 +129,16 @@ function App() {
           </h1>
         </div>
         <div className="buttons">
-          <a id="signUp" className="buttons__signup">
+          <div id="signUp" className="buttons__signup" onClick={handleClick}>
             Sign up
-          </a>
-          <a id="login" className="buttons__signup buttons__signup--login">
+          </div>
+          <div
+            id="login"
+            className="buttons__signup buttons__signup--login"
+            onClick={handleClick}
+          >
             Login
-          </a>
+          </div>
         </div>
       </div>
 
@@ -154,13 +169,13 @@ function App() {
               title="Password must contain at least 3 characters"
               required
             />
-            <a className="login-form__forgot-password" href="#">
+            <div className="login-form__forgot-password" onClick={handleClick}>
               Forgot password?
-            </a>
+            </div>
             <button
               className="buttons__signup buttons__signup--login-form"
               type="submit"
-              href="#"
+              onClick={handleClick}
             >
               Login
             </button>
@@ -168,13 +183,19 @@ function App() {
 
           <div className="social-media">
             <h6 className="title__h2">Or connect with</h6>
-            <a className="buttons__signup buttons__signup--social" href="#">
+            <div
+              className="buttons__signup buttons__signup--social"
+              onClick={handleClick}
+            >
               <i className="fab fa-facebook-f" aria-hidden="true"></i>
               &nbsp;facebook
-            </a>
-            <a className="buttons__signup buttons__signup--social" href="#">
+            </div>
+            <div
+              className="buttons__signup buttons__signup--social"
+              onClick={handleClick}
+            >
               <i className="fab fa-google" aria-hidden="true"></i>&nbsp;google
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -227,13 +248,19 @@ function App() {
 
           <div className="social-media">
             <h2 className="title__h2">Or connect with</h2>
-            <a className="buttons__signup buttons__signup--social" href="#">
+            <div
+              className="buttons__signup buttons__signup--social"
+              onClick={handleClick}
+            >
               <i className="fab fa-facebook-f" aria-hidden="true"></i>
               &nbsp;facebook
-            </a>
-            <a className="buttons__signup buttons__signup--social" href="#">
+            </div>
+            <div
+              className="buttons__signup buttons__signup--social"
+              onClick={handleClick}
+            >
               <i className="fab fa-google" aria-hidden="true"></i>&nbsp;google
-            </a>
+            </div>
           </div>
         </div>
       </div>
