@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  onAuthStateChanged,
+  signInWithPopup,
+  signInWithRedirect,
+} from "firebase/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   /* ===========================
@@ -8,6 +16,23 @@ const Login = () => {
   const [elm, setelm] = useState({});
   const [props, setProps] = useState({});
   const [elms, setElms] = useState([]);
+
+  const auth = getAuth();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("user:", user);
+        if (pathname === "/") navigate("/main");
+      } else {
+        console.log("login");
+        navigate("/");
+      }
+    });
+  }, [auth, navigate, pathname]);
 
   useEffect(() => {
     setelm({
@@ -69,6 +94,14 @@ const Login = () => {
   /* ===========================
       Events
   ============================ */
+
+  const handleAuth = () => {
+    signInWithRedirect(auth, provider)
+      .then((result) => {
+        console.log("success");
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleSignIn = () => {
     const properties = [
@@ -192,7 +225,7 @@ const Login = () => {
             </div>
             <div
               className="buttons__signup buttons__signup--social"
-              //onClick={handleClick}
+              onClick={handleAuth}
             >
               <i className="fab fa-google" aria-hidden="true"></i>&nbsp;google
             </div>
