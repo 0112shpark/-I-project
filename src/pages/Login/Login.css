@@ -79,7 +79,7 @@
   -moz-transition: opacity 2s;
   -o-transition: opacity 2s;
   transition: opacity 2s;
-  background: #3ba4fa url("../../../../public/images/background.jpeg") center
+  background: #3ba4fa url("../../../public/images/background.jpeg") center
     no-repeat;
   background-size: cover;
 }

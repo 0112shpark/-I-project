@@ -4,7 +4,6 @@ import {
   GoogleAuthProvider,
   getAuth,
   onAuthStateChanged,
-  signInWithPopup,
   signInWithRedirect,
 } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +15,10 @@ const Login = () => {
   const [elm, setelm] = useState({});
   const [props, setProps] = useState({});
   const [elms, setElms] = useState([]);
+  const initialUserData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : {};
+  const [userData, setUserData] = useState(initialUserData);
 
   const auth = getAuth();
   const { pathname } = useLocation();
@@ -28,7 +31,7 @@ const Login = () => {
         console.log("user:", user);
         if (pathname === "/") navigate("/main");
       } else {
-        console.log("login");
+        //console.log("login");
         navigate("/");
       }
     });
@@ -98,7 +101,9 @@ const Login = () => {
   const handleAuth = () => {
     signInWithRedirect(auth, provider)
       .then((result) => {
-        console.log("success");
+        setUserData(result.user);
+
+        localStorage.setItem("userData", JSON.stringify(result.user));
       })
       .catch((error) => console.error(error));
   };

@@ -1,7 +1,7 @@
 import "./App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
-import Login from "./components/pages/Login";
-import MainPage from "./components/pages/Main";
+import Login from "./pages/Login";
+import MainPage from "./pages/Main";
 
 const Layout = () => {
   return (
