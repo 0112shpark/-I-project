@@ -4,9 +4,11 @@ import {
   GoogleAuthProvider,
   getAuth,
   onAuthStateChanged,
+  signInWithPopup,
   signInWithRedirect,
 } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useData } from "../../hooks/userData";
 
 const Login = () => {
   /* ===========================
@@ -15,11 +17,11 @@ const Login = () => {
   const [elm, setelm] = useState({});
   const [props, setProps] = useState({});
   const [elms, setElms] = useState([]);
-  const initialUserData = localStorage.getItem("userData")
-    ? JSON.parse(localStorage.getItem("userData"))
-    : {};
-  const [userData, setUserData] = useState(initialUserData);
-
+  // const initialUserData = localStorage.getItem("userData")
+  //   ? JSON.parse(localStorage.getItem("userData"))
+  //   : {};
+  // const [userData, setUserData] = useState(initialUserData);
+  const { userData, setUserData } = useData({});
   const auth = getAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const Login = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("user:", user);
+        //console.log("user:", user);
         if (pathname === "/") navigate("/main");
       } else {
         //console.log("login");
@@ -99,10 +101,10 @@ const Login = () => {
   ============================ */
 
   const handleAuth = () => {
-    signInWithRedirect(auth, provider)
+    signInWithPopup(auth, provider)
       .then((result) => {
+        console.log("user??:", result.user);
         setUserData(result.user);
-
         localStorage.setItem("userData", JSON.stringify(result.user));
       })
       .catch((error) => console.error(error));

@@ -79,3 +79,9 @@
   transition: bottom 2s;
   cursor: pointer;
 }
+
+.userimg {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
