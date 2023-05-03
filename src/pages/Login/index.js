@@ -7,8 +7,7 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
   signInWithRedirect,
-  fetchSignInMethodsForEmail,
-  signInWithCredential,
+  getRedirectResult,
 } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
@@ -118,10 +117,16 @@ const Login = () => {
     signInWithPopup(auth, FacebookProvider)
       .then((result) => {
         // The signed-in user info.
-        //const user = result.user;
-        console.log("user??:", result.user);
-        setUserData(result.user);
-        localStorage.setItem("userData", JSON.stringify(result.user));
+        const user = result.user;
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        console.log("token: ", token);
+        console.log("photourl: ", user.photoURL + "?access_token=" + token);
+        const newPhotoURL = user.photoURL + "?access_token=" + token;
+        user.photoURL = newPhotoURL;
+        console.log("user??:", user);
+        setUserData(user);
+        localStorage.setItem("userData", JSON.stringify(user));
       })
       .catch((error) => {
         console.error(error);
