@@ -5,7 +5,10 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithPopup,
+  FacebookAuthProvider,
   signInWithRedirect,
+  fetchSignInMethodsForEmail,
+  signInWithCredential,
 } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
@@ -26,6 +29,7 @@ const Login = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
+  const FacebookProvider = new FacebookAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -110,6 +114,19 @@ const Login = () => {
       .catch((error) => console.error(error));
   };
 
+  const handleFaceBook = () => {
+    signInWithPopup(auth, FacebookProvider)
+      .then((result) => {
+        // The signed-in user info.
+        //const user = result.user;
+        console.log("user??:", result.user);
+        setUserData(result.user);
+        localStorage.setItem("userData", JSON.stringify(result.user));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   const handleSignIn = () => {
     const properties = [
       props.left,
@@ -225,7 +242,7 @@ const Login = () => {
             <h6 className="title__h2">Or connect with</h6>
             <div
               className="buttons__signup buttons__signup--social"
-              //onClick={handleClick}
+              onClick={handleFaceBook}
             >
               <i className="fab fa-facebook-f" aria-hidden="true"></i>
               &nbsp;facebook
