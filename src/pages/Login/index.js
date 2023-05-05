@@ -11,6 +11,8 @@ import {
 } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
+import SignUp from "./signUp";
+import emailLogin from "./emailLogin";
 
 const Login = () => {
   /* ===========================
@@ -23,17 +25,22 @@ const Login = () => {
   //   ? JSON.parse(localStorage.getItem("userData"))
   //   : {};
   // const [userData, setUserData] = useState(initialUserData);
-  const { userData, setUserData } = useData({});
+  const { userData, setUserData, clearUserData } = useData({});
+  const [Email, setEmail] = useState("");
+  const [UserName, setUserName] = useState("");
+  const [Password, setPassword] = useState("");
+  const [isSignUP, setisSignUP] = useState(true);
   const auth = getAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
   const provider = new GoogleAuthProvider();
   const FacebookProvider = new FacebookAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        //console.log("user:", user);
+        console.log("user:", user);
         if (pathname === "/") navigate("/main");
       } else {
         //console.log("login");
@@ -132,6 +139,37 @@ const Login = () => {
         console.error(error);
       });
   };
+
+  const handleInputChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    } else if (name === "username") {
+      setUserName(value);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    localStorage.removeItem("userData");
+    clearUserData();
+    event.preventDefault();
+    const name = event.target.name;
+    if (name === "signup") {
+      setisSignUP(true);
+      SignUp(Email, Password, UserName);
+      console.log("Email:", Email);
+      console.log("Password:", Password);
+      console.log("Username:", UserName);
+    } else if (name === "login") {
+      emailLogin(Email, Password);
+      setisSignUP(false);
+    }
+  };
+
+  //basic animations
   const handleSignIn = () => {
     const properties = [
       props.left,
@@ -209,17 +247,19 @@ const Login = () => {
 
       <div className="login-form">
         <div className="form-wrapper">
-          <form method="post">
-            <label className="form-wrapper__label" htmlFor="login-username">
-              Username
+          <form method="post" name="login" onSubmit={handleSubmit}>
+            <label className="form-wrapper__label" htmlFor="signup-email">
+              Email
             </label>
             <input
-              id="login-username"
+              id="signup-email1"
               className="form-wrapper__input"
-              type="text"
-              placeholder="Username"
-              name="username"
+              type="email"
+              placeholder="example@hotmail.com"
+              name="email"
               required
+              value={Email}
+              onChange={handleInputChange}
             />
             <label className="form-wrapper__label" htmlFor="login-password">
               Password
@@ -233,6 +273,8 @@ const Login = () => {
               pattern=".{3,}"
               title="Password must contain at least 3 characters"
               required
+              value={Password}
+              onChange={handleInputChange}
             />
             <div className="login-form__forgot-password">Forgot password?</div>
             <button
@@ -264,7 +306,7 @@ const Login = () => {
 
       <div className="login-form login-form--register">
         <div className="form-wrapper">
-          <form method="post">
+          <form method="post" name="signup" onSubmit={handleSubmit}>
             <label className="form-wrapper__label" htmlFor="signup-email">
               Email
             </label>
@@ -275,6 +317,8 @@ const Login = () => {
               placeholder="example@hotmail.com"
               name="email"
               required
+              value={Email}
+              onChange={handleInputChange}
             />
             <label className="form-wrapper__label" htmlFor="signup-username">
               Username
@@ -286,6 +330,8 @@ const Login = () => {
               placeholder="Username"
               name="username"
               required
+              value={UserName}
+              onChange={handleInputChange}
             />
             <label className="form-wrapper__label" htmlFor="signup-password">
               Password
@@ -299,6 +345,8 @@ const Login = () => {
               pattern=".{3,}"
               title="Password must contain at least 3 characters"
               required
+              value={Password}
+              onChange={handleInputChange}
             />
             <button
               className="buttons__signup buttons__signup--sign-up-form"
@@ -306,6 +354,14 @@ const Login = () => {
             >
               Sign up
             </button>
+            <div
+              id="login"
+              className="buttons__signup buttons__signup--login"
+              onClick={handleLogin}
+              style={{ position: "relative" }}
+            >
+              Go to Login Page
+            </div>
           </form>
 
           <div className="social-media">

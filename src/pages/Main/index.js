@@ -14,8 +14,8 @@ const MainPage = () => {
   const handleSignout = () => {
     signOut(auth)
       .then((result) => {
-        console.log("Logout:", userData);
         clearUserData();
+        console.log("Logout:", userData);
         navigate("/");
       })
       .catch((error) => console.error(error));
