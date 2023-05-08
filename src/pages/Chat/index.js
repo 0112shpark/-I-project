@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./main.css";
 import { useData } from "../../hooks/userData";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 const Chatbot = () => {
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hello, how can I help you today?" },
+    { id: 1, text: "Hello, how can I help you today?", isBot: 1 },
   ]);
   const [inputValue, setInputValue] = useState("");
-  const { handleSignout } = useData({});
+  const { userData } = useData({});
   const navigate = useNavigate();
+
+  // 자동 스크롤
+  useEffect(() => {
+    var divdiv = document.getElementById("mess");
+
+    divdiv.scrollTop = divdiv.scrollHeight;
+  }, [messages]);
 
   const handleInputSubmit = (e) => {
     e.preventDefault();
     if (inputValue !== "") {
-      setMessages([...messages, { id: messages.length + 1, text: inputValue }]);
+      setMessages([
+        ...messages,
+        { id: messages.length + 1, text: inputValue, isBot: 0 },
+      ]);
       setInputValue("");
     }
   };
@@ -23,25 +33,33 @@ const Chatbot = () => {
   };
 
   return (
-    <body>
+    <section className="container">
       <div className="chatbot-container">
         <div className="chatbot-header">
-          <div className="chatbot-header-text">Chatbot</div>
-          <div className="buttons__signout_chat" onClick={handleSignout}>
-            Logout
-          </div>
           <button
             className="chatbot-header-close"
             onClick={() => {
               navigate(-1);
             }}
           >
-            X
+            &#8592;
           </button>
+          <div className="chatbot-header-text">Chatbot</div>
+          <img
+            className="user-img"
+            src={userData.photoURL}
+            alt={userData.displayName}
+          ></img>
         </div>
-        <div className="chatbot-messages">
+        <div className="chatbot-messages" id="mess">
           {messages.map((message) => (
-            <div key={message.id} className="chatbot-message">
+            <div
+              key={message.id}
+              className="chatbot-message"
+              style={{
+                alignSelf: message.isBot ? "flex-start" : "flex-end",
+              }}
+            >
               {message.text}
             </div>
           ))}
@@ -59,7 +77,7 @@ const Chatbot = () => {
           </button>
         </form>
       </div>
-    </body>
+    </section>
   );
 };
 
