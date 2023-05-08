@@ -12,7 +12,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
 import SignUp from "./signUp";
-import emailLogin from "./emailLogin";
+import EmailLogin from "./emailLogin";
 
 const Login = () => {
   /* ===========================
@@ -172,7 +172,8 @@ const Login = () => {
       console.log("Password:", Password);
       console.log("Username:", UserName);
     } else if (name === "login") {
-      emailLogin(Email, Password);
+      EmailLogin(Email, Password);
+
       setisSignUP(false);
     }
   };
