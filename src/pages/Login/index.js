@@ -116,7 +116,9 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         //providerData[0]에 email, displayName으로 저장되어있음
-        console.log("user??:", result.user.providerData[0].email);
+
+        console.log("user-email:", result.user.providerData[0].email);
+        console.log("user-name:", result.user.displayName);
 
         setUserData(result.user);
         localStorage.setItem("userData", JSON.stringify(result.user));
@@ -136,6 +138,8 @@ const Login = () => {
         const newPhotoURL = user.photoURL + "?access_token=" + token;
         user.photoURL = newPhotoURL;
         console.log("user??:", user);
+        console.log("user-email:", result.user.providerData[0].email);
+        console.log("user-name:", result.user.displayName);
         setUserData(user);
         localStorage.setItem("userData", JSON.stringify(user));
       })
