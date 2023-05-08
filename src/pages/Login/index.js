@@ -34,8 +34,10 @@ const Login = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const provider = new GoogleAuthProvider();
-  const FacebookProvider = new FacebookAuthProvider();
+  var provider = new GoogleAuthProvider();
+  provider.addScope("email");
+  var FacebookProvider = new FacebookAuthProvider();
+  FacebookProvider.addScope("email");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -113,7 +115,9 @@ const Login = () => {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log("user??:", result.user);
+        //providerData[0]에 email, displayName으로 저장되어있음
+        console.log("user??:", result.user.providerData[0].email);
+
         setUserData(result.user);
         localStorage.setItem("userData", JSON.stringify(result.user));
       })

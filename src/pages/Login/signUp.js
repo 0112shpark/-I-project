@@ -17,6 +17,9 @@ const SignUp = (Email, Password, UserName) => {
       console.log("User signed up successfully:", user);
       alert("Successfully signed up");
 
+
+      // add to database
+
       const userId = auth.currentUser.uid;
       const db = getDatabase();
       set(ref(db, "users/" + userId), {
