@@ -17,6 +17,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
           <Route path="main" element={<MainPage />} />
+          <Route path = "search" element={< />} />
         </Route>
       </Routes>
     </div>

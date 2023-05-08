@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
 import "./Main.css";
-import Nav from "../../components/Nav";
+// import Nav from "../../components/Nav";
 
 const MainPage = () => {
   //console.log("hello world");
@@ -24,8 +24,6 @@ const MainPage = () => {
   return (
     <>
       <section className="container">
-        {" "}
-        {/* <Nav></Nav> */}
         <div className="main-container">
           <div>Login success!!</div>
           <img
