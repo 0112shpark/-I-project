@@ -2,6 +2,7 @@ import "./App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import MainPage from "./pages/Main";
+import Chatbot from "./pages/Chat";
 
 const Layout = () => {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
           <Route path="main" element={<MainPage />} />
+          <Route path="chat" element={<Chatbot />} />
         </Route>
       </Routes>
     </div>

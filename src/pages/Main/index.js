@@ -22,24 +22,27 @@ const MainPage = () => {
       .catch((error) => console.error(error));
   };
   return (
-    <>
-      <section className="container">
-        {" "}
-        {/* <Nav></Nav> */}
-        <div className="main-container">
-          <div>Login success!!</div>
-          <img
-            className="userimg"
-            src={userData.photoURL}
-            alt={userData.displayName}
-          />
-          <div className="buttons__signout" onClick={handleSignout}>
-            Logout
+    (
+      <>
+        <section className="container">
+          {" "}
+          {/* <Nav></Nav> */}
+          <div className="main-container">
+            <div>Login success!!</div>
+            <img
+              className="userimg"
+              src={userData.photoURL}
+              alt={userData.displayName}
+            />
+            <div className="buttons__signout" onClick={handleSignout}>
+              Logout
+            </div>
+            <div>Hello</div>
           </div>
-          <div>Hello</div>
-        </div>
-      </section>
-    </>
+        </section>
+      </>
+    ),
+    handleSignout
   );
 };
 
