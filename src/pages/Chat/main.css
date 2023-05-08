@@ -50,6 +50,10 @@
   height: inherit;
 }
 
+/* button */
+
+.buttons__signout_chat {
+}
 .chatbot-container {
   position: absolute;
   margin: auto;

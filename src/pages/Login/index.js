@@ -43,7 +43,7 @@ const Login = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("user:", user);
-        if (pathname === "/") navigate("/chat");
+        if (pathname === "/") navigate("/main");
       } else {
         //console.log("login");
         navigate("/");

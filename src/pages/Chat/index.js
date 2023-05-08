@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./main.css";
 import { useData } from "../../hooks/userData";
+import { Navigate, useNavigate } from "react-router";
 const Chatbot = () => {
   const [messages, setMessages] = useState([
     { id: 1, text: "Hello, how can I help you today?" },
   ]);
   const [inputValue, setInputValue] = useState("");
   const { handleSignout } = useData({});
+  const navigate = useNavigate();
 
   const handleInputSubmit = (e) => {
     e.preventDefault();
@@ -25,10 +27,17 @@ const Chatbot = () => {
       <div className="chatbot-container">
         <div className="chatbot-header">
           <div className="chatbot-header-text">Chatbot</div>
-          <div className="buttons__signout1" onClick={handleSignout}>
+          <div className="buttons__signout_chat" onClick={handleSignout}>
             Logout
           </div>
-          <div className="chatbot-header-close">X</div>
+          <button
+            className="chatbot-header-close"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            X
+          </button>
         </div>
         <div className="chatbot-messages">
           {messages.map((message) => (
