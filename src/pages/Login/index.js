@@ -116,6 +116,7 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         //providerData[0]에 email, displayName으로 저장되어있음
+
         console.log("user-email:", result.user.providerData[0].email);
         console.log("user-name:", result.user.displayName);
 
