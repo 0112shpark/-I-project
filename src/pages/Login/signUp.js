@@ -3,6 +3,9 @@ import {
   getAuth,
   sendEmailVerification,
 } from "firebase/auth";
+
+import { getDatabase, ref, set } from "firebase/database";
+
 import React from "react";
 
 const SignUp = (Email, Password, UserName) => {
@@ -10,10 +13,18 @@ const SignUp = (Email, Password, UserName) => {
 
   createUserWithEmailAndPassword(auth, Email, Password)
     .then((userCredential) => {
-      // 회원가입 성공 시 실행되는 코드
       const user = userCredential.user;
       console.log("User signed up successfully:", user);
       alert("Successfully signed up");
+
+      const userId = auth.currentUser.uid;
+      const db = getDatabase();
+      set(ref(db, "users/" + userId), {
+        username: UserName,
+        email: Email,
+        friends: "0",
+      });
+      set(ref(db, "friends/" + userId));
     })
     .catch((error) => {
       if (error.code === "auth/email-already-in-use") {
@@ -27,5 +38,4 @@ const SignUp = (Email, Password, UserName) => {
       }
     });
 };
-
 export default SignUp;
