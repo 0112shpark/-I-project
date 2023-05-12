@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: center;
   perspective: 1000px;
-  background: #f3f3f3;
+  /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
 }
 
 .container {
@@ -31,7 +31,7 @@
   overflow: hidden;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
-  background: #f3f3f3;
+  /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
 }
 
 .main-container {
@@ -48,6 +48,8 @@
   left: initial;
   width: inherit;
   height: inherit;
+  background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg");
+  background-size: cover;
 }
 
 .buttons__signout {
