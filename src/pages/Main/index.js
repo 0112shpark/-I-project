@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
 import "./Main.css";
 import Nav from "../../components/Nav";
+import video from "../../videos/sea-6399.mp4";
 
 const MainPage = () => {
   //console.log("hello world");
@@ -24,6 +25,8 @@ const MainPage = () => {
   return (
     <>
       <section className="container">
+        <Nav></Nav>
+        {/* <video src={video} muted autoPlay loop type="video/mp4"></video> */}
         <div className="main-container">
           <div>Login success!!</div>
           <img

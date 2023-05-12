@@ -1,2 +1,17 @@
-.nav {
+a {
+  text-decoration: none;
+  color: blue;
+}
+
+li {
+  list-style: none;
+  color: greenyellow;
+}
+
+.section {
+  padding: 4rem 0 2rem;
+}
+
+.logout {
+  font-size: 1rem;
 }

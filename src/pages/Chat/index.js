@@ -3,6 +3,7 @@ import "./main.css";
 import { useData } from "../../hooks/userData";
 import { useNavigate } from "react-router";
 import { Configuration, OpenAIApi } from "openai";
+import { FaCommentDots } from "react-icons/fa";
 const configuration = new Configuration({
   organization: "org-JbU7cwJQlyRC9PjUIczsSIaO",
   apiKey: "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",
@@ -177,6 +178,7 @@ const Chatbot = () => {
               {message.text}
             </div>
           ))}
+          {isloading && <FaCommentDots className="icon"></FaCommentDots>}
         </div>
         <form onSubmit={handleInputSubmit} className="chatbot-input-container">
           <input
