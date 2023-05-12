@@ -24,8 +24,8 @@ const MainPage = () => {
   };
   return (
     <>
-      <section className="container">
-        <Nav></Nav>
+      <div className="container">
+        <Nav />
         {/* <video src={video} muted autoPlay loop type="video/mp4"></video> */}
         <div className="main-container">
           <div>Login success!!</div>
@@ -48,7 +48,7 @@ const MainPage = () => {
           </div>
           <div>Hello</div>
         </div>
-      </section>
+      </div>
     </>
   );
 };
