@@ -5,9 +5,11 @@ import { useNavigate } from "react-router";
 import { Configuration, OpenAIApi } from "openai";
 const configuration = new Configuration({
   organization: "org-JbU7cwJQlyRC9PjUIczsSIaO",
-  apiKey: "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",
+  apiKey: "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",
 });
-const my_apikey = "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";
+const { APIKEY } = process.env;
+// console.log(process.env.APIKEY);
+const my_apikey = "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";
 //const openai = new OpenAIApi(configuration);
 
 const Chatbot = () => {
