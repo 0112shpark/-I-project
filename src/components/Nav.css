@@ -26,6 +26,7 @@ li {
   padding: 1rem;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(2, 15, 29, 0.242);
+  border-radius: 30px;
 }
 .logo {
   color: var(--blackColor);
@@ -45,16 +46,18 @@ li {
   height: max-content;
   width: 80%;
   border-radius: 1rem;
-  top: -500rem;
+  top: 7rem;
   left: 50%;
   padding: 1rem;
   transform: translate(-50%);
   z-index: 2000;
   box-shadow: 0 2px 4px rgba(2, 15, 29, 0.904);
   transition: 0.5s ease-in-out;
+  opacity: 0;
 }
 .navBar.activeNavBar {
-  top: 8rem;
+  top: 7rem;
+  opacity: 1;
 }
 .navLists {
   flex-direction: column;
@@ -64,7 +67,10 @@ li {
   padding: 1rem 0;
 }
 .navItem {
-  padding: 0.5rem, 0;
+  padding: 0.5rem;
+}
+.navItem .icon {
+  font-size: 1rem;
 }
 .navLink {
   color: var(--textColor);

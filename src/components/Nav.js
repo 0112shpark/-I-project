@@ -4,6 +4,8 @@ import { MdOutlineTravelExplore } from "react-icons/md";
 import { RiCloseFill } from "react-icons/ri";
 import { BiLogOutCircle } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
+import { CgProfile } from "react-icons/cg";
+import { BsInfoCircle } from "react-icons/bs";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../hooks/userData";
@@ -46,13 +48,18 @@ const Nav = () => {
         <div className={active}>
           <ul className="navLists flex">
             <li className="navItem">
+              <a href="/About" className="navLink">
+                <BsInfoCircle className="icon" /> About
+              </a>
+            </li>
+            <li className="navItem">
               <a href="/MyPage" className="navLink">
-                MY Page
+                <CgProfile className="icon" /> MY Page
               </a>
             </li>
 
             <button className="btn">
-              <a href="/" className="navLink" onClick={handleSignout}>
+              <a href="/" onClick={handleSignout}>
                 <BiLogOutCircle className="logout" /> LogOut
               </a>
             </button>
