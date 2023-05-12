@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
 import "./Main.css";
 import Nav from "../../components/Nav";
-import video from "../../videos/sea-6399.mp4";
+import Search from "../../components/search";
 
 const MainPage = () => {
   //console.log("hello world");
@@ -26,8 +26,8 @@ const MainPage = () => {
     <>
       <div className="container">
         <Nav />
-        {/* <video src={video} muted autoPlay loop type="video/mp4"></video> */}
-        <div className="main-container">
+        <Search />
+        {/* <div className="main-container">
           <div>Login success!!</div>
           <img
             className="userimg"
@@ -47,7 +47,7 @@ const MainPage = () => {
             Logout
           </div>
           <div>Hello</div>
-        </div>
+        </div> */}
       </div>
     </>
   );

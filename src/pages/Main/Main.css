@@ -52,36 +52,6 @@
   background-size: cover;
 }
 
-.buttons__signout {
-  position: absolute;
-  margin: auto;
-  top: 200px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 7px 0;
-  border: none;
-  border-radius: 10px;
-  width: 200px;
-  height: 30px;
-  display: block;
-  outline: none;
-  text-align: inherit;
-  text-transform: uppercase;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  font-size: 12px;
-  font-weight: 500;
-  color: #fff;
-  background: #4f73d9;
-  box-shadow: 0 15px 30px rgba(79, 115, 217, 0.36);
-  -webkit-transition: bottom 2s;
-  -moz-transition: bottom 2s;
-  -o-transition: bottom 2s;
-  transition: bottom 2s;
-  cursor: pointer;
-}
-
 .userimg {
   border-radius: 50%;
   width: 120px;
