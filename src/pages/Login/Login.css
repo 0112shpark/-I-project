@@ -239,6 +239,7 @@
   font-size: 12px;
   font-weight: 600;
   color: #8dabfb;
+  padding-bottom: 0;
 }
 
 .form-wrapper__input {
