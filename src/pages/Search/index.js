@@ -15,9 +15,18 @@ const SearchPage = () => {
   let query = useQuery();
   const searchTerm = query.get("q");
   useEffect(() => {
+    //contentstypeID
+    // 12 => 관광지
+    // 14 => 문화시설
+    // 15 => 행사/공연/축제
+    // 25 => 여행코스
+    // 28 => 레포츠
+    // 32 => 숙박
+    // 38 => 쇼핑
+    // 39 => 음식점
     window
       .fetch(
-        `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=VWVz5AVsiy%2F0nCNOXrxaxJy5b7pzOz3GyOBxO3T8av6rb9xuOhTZpv50%2BbrWeqaaok0Nk77O%2B%2F8wCWW4MPJLNA%3D%3D&listYN=Y&arrange=A&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&keyword=${searchTerm}&_type=json`
+        `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentTypeId=12&ServiceKey=VWVz5AVsiy%2F0nCNOXrxaxJy5b7pzOz3GyOBxO3T8av6rb9xuOhTZpv50%2BbrWeqaaok0Nk77O%2B%2F8wCWW4MPJLNA%3D%3D&listYN=Y&arrange=A&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&keyword=${searchTerm}&_type=json`
       )
       .then((res) => res.json())
       .then((result) => {
