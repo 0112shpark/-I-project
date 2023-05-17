@@ -5,6 +5,7 @@ import MainPage from "./pages/Main";
 import Chatbot from "./pages/Chat";
 import MyPage from "./pages/MyPage";
 import About from "./pages/About";
+import SearchPage from "./pages/Search";
 
 const Layout = () => {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="chat" element={<Chatbot />} />
           <Route path="myPage" element={<MyPage />} />
           <Route path="about" element={<About />} />
+          <Route path="search" element={<SearchPage />} />
         </Route>
       </Routes>
     </div>

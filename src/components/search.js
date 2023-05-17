@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import video from "../videos/korea.mp4";
 import "./search.css";
 import { GrLocation } from "react-icons/gr";
 import { BiBus } from "react-icons/bi";
 import { TbTrain } from "react-icons/tb";
 import { AiOutlineGithub } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 const Search = () => {
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+
+  const handleinput = (event) => {
+    const value = event.target.value;
+    setKeyword(value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      // setSearchValue(e.target.value);
+      // console.log(searchValue);
+      navigate(`/search?q=${keyword}`);
+    }
+  };
+
+  const handlesearch = (e) => {
+    navigate(`/search?q=${keyword}`);
+  };
+
   return (
     <section className="search">
       <div className="overlay1"></div>
@@ -20,8 +41,14 @@ const Search = () => {
           <div className="destination">
             <label htmlFor="dest">Search your destination:</label>
             <div className="input flex">
-              <input type="text" placeholder="Enter name here..." />
-              <GrLocation className="icon" />
+              <input
+                type="text"
+                placeholder="Enter name here..."
+                value={keyword}
+                onChange={handleinput}
+                onKeyDown={handleKeyDown}
+              />
+              <GrLocation className="icon" onClick={handlesearch} />
             </div>
           </div>
           <div className="option2">
