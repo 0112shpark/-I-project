@@ -6,8 +6,10 @@ import { BiBus } from "react-icons/bi";
 import { TbTrain } from "react-icons/tb";
 import { AiOutlineGithub } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+
 const Search = () => {
   const [keyword, setKeyword] = useState("");
+  const [option, setOption] = useState("");
   const navigate = useNavigate();
 
   const handleinput = (event) => {
@@ -15,16 +17,20 @@ const Search = () => {
     setKeyword(value);
   };
 
+  const handleOption = (event) => {
+    setOption(event.target.value);
+  };
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       // setSearchValue(e.target.value);
       // console.log(searchValue);
-      navigate(`/search?q=${keyword}`);
+      navigate(`/search?q=${keyword}&id=${option}`);
     }
   };
 
   const handlesearch = (e) => {
-    navigate(`/search?q=${keyword}`);
+    navigate(`/search?q=${keyword}&id=${option}`);
   };
 
   return (
@@ -52,10 +58,19 @@ const Search = () => {
             </div>
           </div>
           <div className="option2">
-            <label htmlFor="op2">Second option</label>
-            <div className="input flex">
-              <input type="text" placeholder="Option 2" />
-              <GrLocation className="icon" />
+            <label htmlFor="input flex">Second option:</label>
+            <div className="select-wrapper">
+              <select value={option} onChange={handleOption}>
+                <option value="">--Please choose an option--</option>
+                <option value="12">관광지</option>
+                <option value="14">문화시설</option>
+                <option value="15">행사/공연/축제</option>
+                <option value="25">여행코스</option>
+                <option value="28">레포츠</option>
+                <option value="32">숙박</option>
+                <option value="38">쇼핑</option>
+                <option value="39">음식점</option>
+              </select>
             </div>
           </div>
         </div>

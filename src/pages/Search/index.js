@@ -7,13 +7,15 @@ import { GrLocation } from "react-icons/gr";
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
   const [item, setitem] = useState([]);
-  const [data, setdata] = useState({});
+  const [option, setOption] = useState("");
   const navigate = useNavigate();
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
   };
   let query = useQuery();
   const searchTerm = query.get("q");
+  const contentid = query.get("id");
+
   useEffect(() => {
     //contentstypeID
     // 12 => 관광지
@@ -24,10 +26,15 @@ const SearchPage = () => {
     // 32 => 숙박
     // 38 => 쇼핑
     // 39 => 음식점
+    let URL;
+
+    if (!contentid) {
+      URL = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=VWVz5AVsiy%2F0nCNOXrxaxJy5b7pzOz3GyOBxO3T8av6rb9xuOhTZpv50%2BbrWeqaaok0Nk77O%2B%2F8wCWW4MPJLNA%3D%3D&listYN=Y&arrange=A&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&keyword=${searchTerm}&_type=json`;
+    } else {
+      URL = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentTypeId=${contentid}&ServiceKey=VWVz5AVsiy%2F0nCNOXrxaxJy5b7pzOz3GyOBxO3T8av6rb9xuOhTZpv50%2BbrWeqaaok0Nk77O%2B%2F8wCWW4MPJLNA%3D%3D&listYN=Y&arrange=A&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&keyword=${searchTerm}&_type=json`;
+    }
     window
-      .fetch(
-        `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentTypeId=12&ServiceKey=VWVz5AVsiy%2F0nCNOXrxaxJy5b7pzOz3GyOBxO3T8av6rb9xuOhTZpv50%2BbrWeqaaok0Nk77O%2B%2F8wCWW4MPJLNA%3D%3D&listYN=Y&arrange=A&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&keyword=${searchTerm}&_type=json`
-      )
+      .fetch(URL)
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -35,28 +42,29 @@ const SearchPage = () => {
         const { body } = response;
         const { items } = body;
         const { item } = items;
-        setdata(item[0]);
         setitem(item);
         console.log("item", item);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [searchTerm]);
+  }, [contentid, searchTerm]);
 
   const handleinput = (event) => {
     const value = event.target.value;
     setKeyword(value);
   };
-
+  const handleOption = (event) => {
+    setOption(event.target.value);
+  };
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      navigate(`/search?q=${keyword}`);
+      navigate(`/search?q=${keyword}&id=${option}`);
     }
   };
 
   const handlesearch = (e) => {
-    navigate(`/search?q=${keyword}`);
+    navigate(`/search?q=${keyword}&id=${option}`);
   };
 
   return (
@@ -75,24 +83,30 @@ const SearchPage = () => {
             <GrLocation className="icon" onClick={handlesearch} />
           </div>
         </div>
-
+        <div className="option2">
+          <div className="select-wrapper">
+            <select value={option} onChange={handleOption}>
+              <option value="">--Please choose an option--</option>
+              <option value="12">관광지</option>
+              <option value="14">문화시설</option>
+              <option value="15">행사/공연/축제</option>
+              <option value="25">여행코스</option>
+              <option value="28">레포츠</option>
+              <option value="32">숙박</option>
+              <option value="38">쇼핑</option>
+              <option value="39">음식점</option>
+            </select>
+          </div>
+        </div>
         {item.map((data) => (
-          <>
-            <div className="itmes" key={data.contentid}>
-              {data.firstimage ? (
-                <img src={data.firstimage} alt={data.title} />
-              ) : (
-                <img src="/images/noimage.jpg" alt={data.title} />
-              )}
-              <h2>{data.title}</h2>
-              <p>Address: {data.addr1}</p>
-              <p>Area Code: {data.areacode}</p>
-              <p>Category 1: {data.cat1}</p>
-              <p>Category 2: {data.cat2}</p>
-              <p>Category 3: {data.cat3}</p>
-              <p>Content Type ID: {data.contenttypeid}</p>
-            </div>
-          </>
+          <div className="items" key={data.contentid}>
+            {data.firstimage ? (
+              <img src={data.firstimage} alt={data.title} />
+            ) : (
+              <img src="/images/noimage.jpg" alt={data.title} />
+            )}
+            <h2>{data.title}</h2>
+          </div>
         ))}
       </div>
     </>
