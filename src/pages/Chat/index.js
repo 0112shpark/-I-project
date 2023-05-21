@@ -23,7 +23,7 @@ const Chatbot = () => {
   const [isloading, setIsloading] = useState(false);
   const { contentid, contenttypeid } = useParams();
   const navigate = useNavigate();
-  /*
+  
   useEffect(() => {    
     returnInformation(contentid,contenttypeid)
     .then((retInfo) => {
@@ -38,7 +38,7 @@ const Chatbot = () => {
       console.error("Error:", error);
     });
   }, []);
-  */
+  
   // 자동 스크롤
   useEffect(() => {
     var divdiv = document.getElementById("mess");
