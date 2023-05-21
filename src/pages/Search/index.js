@@ -3,6 +3,7 @@ import Nav from "../../components/Nav";
 import "./main.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GrLocation } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -14,6 +15,10 @@ const SearchPage = () => {
   };
   let query = useQuery();
   const searchTerm = query.get("q");
+
+  console.log(
+    `Received ${searchTerm}`
+  );
   useEffect(() => {
     window
       .fetch(
@@ -28,7 +33,7 @@ const SearchPage = () => {
         const { item } = items;
         setdata(item[0]);
         setitem(item);
-        console.log("item", item);
+        console.log("itemd", item[0].contentid);
       })
       .catch((error) => {
         console.error(error);
@@ -69,13 +74,14 @@ const SearchPage = () => {
 
         {item.map((data) => (
           <>
-            <div className="itmes" key={data.contentid}>
+            <div className="items" key={data.contentid}>
               {data.firstimage ? (
                 <img src={data.firstimage} alt={data.title} />
               ) : (
                 <img src="/images/noimage.jpg" alt={data.title} />
               )}
-              <h2>{data.title}</h2>
+              
+              <h2><Link to={`/chat/${data.contentid}/${data.contenttypeid}`}>{data.title}</Link></h2>
               <p>Address: {data.addr1}</p>
               <p>Area Code: {data.areacode}</p>
               <p>Category 1: {data.cat1}</p>
