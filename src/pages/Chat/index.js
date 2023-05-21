@@ -4,14 +4,7 @@ import { useData } from "../../hooks/userData";
 import { useNavigate } from "react-router";
 import { Configuration, OpenAIApi } from "openai";
 import { FaCommentDots } from "react-icons/fa";
-const configuration = new Configuration({
-  organization: "org-JbU7cwJQlyRC9PjUIczsSIaO",
-  apiKey: "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",
-});
-const { APIKEY } = process.env;
-// console.log(process.env.APIKEY);
-const my_apikey = "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";
-//const openai = new OpenAIApi(configuration);
+const my_apikey = process.env.REACT_APP_OPENAI_API_KEY;
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
@@ -189,7 +182,11 @@ const Chatbot = () => {
             disabled={isloading}
             className="chatbot-input"
           />
-          <button type="submit" className="chatbot-send-button">
+          <button
+            type="submit"
+            className="chatbot-send-button"
+            disabled={isloading}
+          >
             Send
           </button>
         </form>
