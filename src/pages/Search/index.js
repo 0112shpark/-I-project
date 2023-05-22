@@ -98,16 +98,21 @@ const SearchPage = () => {
             </select>
           </div>
         </div>
-        {item.map((data) => (
-          <div className="items" key={data.contentid}>
-            {data.firstimage ? (
-              <img src={data.firstimage} alt={data.title} />
-            ) : (
-              <img src="/images/noimage.jpg" alt={data.title} />
-            )}
-            <h2>{data.title}</h2>
-          </div>
-        ))}
+        <div className="search-topics">
+          "{searchTerm}"에 대한 {option}검색결과입니다.
+        </div>
+        <div className="search-results">
+          {item.map((data) => (
+            <div className="items" key={data.contentid}>
+              {data.firstimage ? (
+                <img src={data.firstimage} alt={data.title} />
+              ) : (
+                <img src="/images/noimage.jpg" alt={data.title} />
+              )}
+              <h2>{data.title}</h2>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap");
 :after,
 :before {
   box-sizing: border-box;
@@ -16,11 +17,10 @@
   align-items: center;
   justify-content: center;
   perspective: 1000px;
-  /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
 }
 
-.container {
-  position: absolute;
+.container_about {
+  position: fixed;
   margin: auto;
   top: 0;
   right: 0;
@@ -31,23 +31,97 @@
   overflow: hidden;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
-  /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
+  background: #99c2e3 url("../../../public/images/travel.jpg") center no-repeat;
+  background-size: cover;
 }
 
-.main-container {
+.about_top {
   text-align: center;
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   flex-direction: column;
-  position: absolute;
+
   margin: initial;
-  top: initial;
   right: initial;
-  bottom: initial;
+
   left: initial;
   width: inherit;
   height: inherit;
-  /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
+}
+
+.about_box1 {
+  text-align: center;
+  position: relative;
+  display: block;
+
+  flex-direction: column;
+
+  margin: initial;
+  top: 10%;
+  right: initial;
+
+  left: 15%;
+  width: 70%;
+  height: 10%;
+  background: url("../../../public/images/fish_2.png") center no-repeat;
   background-size: cover;
+}
+
+.about_box2 {
+  text-align: center;
+  font-size: 27px;
+  font-family: "Gamja Flower", cursive;
+  color: blue;
+  position: relative;
+  display: block;
+
+  flex-direction: column;
+
+  margin: initial;
+  top: 15%;
+  right: initial;
+
+  left: initial;
+  width: 100%;
+  height: 5%;
+}
+
+.about_box3 {
+  text-align: left;
+  position: relative;
+  display: block;
+  font-size: 23px;
+  font-family: "Gamja Flower", cursive;
+
+  flex-direction: column;
+
+  margin: initial;
+  top: 20%;
+  right: 5%;
+
+  left: 5%;
+  width: 90%;
+  height: 20%;
+  word-break: keep-all;
+}
+
+.about_box4 {
+  text-align: left;
+  position: relative;
+  display: block;
+  font-size: 23px;
+  font-family: "Gamja Flower", cursive;
+
+  flex-direction: column;
+
+  margin: initial;
+  top: 30%;
+  right: 5%;
+
+  left: 5%;
+  width: 90%;
+  height: 20%;
+
+  word-break: keep-all;
 }

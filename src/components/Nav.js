@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Nav.css";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import { RiCloseFill } from "react-icons/ri";
@@ -6,8 +6,9 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { CgProfile } from "react-icons/cg";
 import { BsInfoCircle } from "react-icons/bs";
+import { AiFillHome } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useData } from "../hooks/userData";
 
 const Nav = () => {
@@ -15,9 +16,63 @@ const Nav = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const { userData, clearUserData } = useData({});
+  const { pathname } = useLocation();
+  const [path, setPath] = useState("/main");
+
+  useEffect(() => {
+    setPath(pathname);
+  }, [pathname]);
 
   //toggle
 
+  const renderNav = () => {
+    if (path === "/main") {
+      return (
+        <>
+          <li className="navItem">
+            <a href="/About" className="navLink">
+              <BsInfoCircle className="icon" /> About
+            </a>
+          </li>
+          <li className="navItem">
+            <a href="/MyPage" className="navLink">
+              <CgProfile className="icon" /> MY Page
+            </a>
+          </li>
+        </>
+      );
+    } else if (path === "/About") {
+      return (
+        <>
+          <li className="navItem">
+            <a href="/main" className="navLink">
+              <AiFillHome className="icon" /> Main
+            </a>
+          </li>
+          <li className="navItem">
+            <a href="/MyPage" className="navLink">
+              <CgProfile className="icon" /> MY Page
+            </a>
+          </li>
+        </>
+      );
+    } else if (path === "/MyPage") {
+      return (
+        <>
+          <li className="navItem">
+            <a href="/main" className="navLink">
+              <AiFillHome className="icon" /> Main
+            </a>
+          </li>
+          <li className="navItem">
+            <a href="/About" className="navLink">
+              <CgProfile className="icon" /> About
+            </a>
+          </li>
+        </>
+      );
+    }
+  };
   const showNav = () => {
     setActive("navBar activeNavBar");
   };
@@ -47,16 +102,7 @@ const Nav = () => {
         </div>
         <div className={active}>
           <ul className="navLists flex">
-            <li className="navItem">
-              <a href="/About" className="navLink">
-                <BsInfoCircle className="icon" /> About
-              </a>
-            </li>
-            <li className="navItem">
-              <a href="/MyPage" className="navLink">
-                <CgProfile className="icon" /> MY Page
-              </a>
-            </li>
+            {renderNav()}
 
             <button className="btn">
               <a href="/" onClick={handleSignout}>
