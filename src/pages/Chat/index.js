@@ -5,13 +5,15 @@ import { useData } from "../../hooks/userData";
 import { useNavigate } from "react-router";
 import { Configuration, OpenAIApi } from "openai";
 import { FaCommentDots } from "react-icons/fa";
-const configuration = new Configuration({
+import map_keys from "./sample.json";
+/*const configuration = new Configuration({
   organization: "org-JbU7cwJQlyRC9PjUIczsSIaO",
   apiKey: "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",
-});
+});*/
 const { APIKEY } = process.env;
 // console.log(process.env.APIKEY);
-const my_apikey = process.env.REACT_APP_OPENAI_API_KEY
+const my_apikey = process.env.REACT_APP_OPENAI_API_KEY;
+console.log(my_apikey)
 //const openai = new OpenAIApi(configuration);
 
 const Chatbot = () => {
@@ -75,11 +77,15 @@ const Chatbot = () => {
     const { body } = response;
     const { items } = body;
     const { item } = items;
-    let concat_prefix = "";
-
+    let concat_prefix = "여행지 검색 정보에 대한 파일과 추천 멘트 형식을 아래와 같이 제공할테니, 형식을 준수해서 글을 작성해줘. \n 검색 정보: '''\n "
+    
     for (const [key, value] of Object.entries(item[0])) {
-      concat_prefix += `${key}: ${value} `;
+      if(key in map_keys && value != ""){
+        console.log(key);
+        concat_prefix += `${map_keys[key]}: ${value} `;
+      }
     }
+    concat_prefix += "\n'''\n형식: \n'''오늘 갈 여행지에 대한 정보입니다. \n{여행지 이름}: {여행지 설명}";
     return concat_prefix;
   }
   
@@ -137,7 +143,9 @@ const Chatbot = () => {
       // stream: true,
     };
     //console.log(configuration['apiKey'])
+    
     console.log(msg);
+    console.log(my_apikey);
     const params_ = { ...DEFAULT_PARAMS, ...params };
     const result = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
