@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Nanum+Myeongjo:400,700");
 .container {
   overflow: auto;
 }
@@ -108,6 +109,7 @@ img {
   background: #fff;
   border-radius: 4px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  height: 200px;
 }
 
 .firstimage {
@@ -129,6 +131,8 @@ img {
   text-align: center;
   word-break: break-all;
   cursor: pointer;
+  font-family: "Nanum Myeongjo";
+  font-weight: 700;
 }
 .titles:hover {
   text-decoration: underline;

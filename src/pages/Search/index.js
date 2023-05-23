@@ -6,10 +6,11 @@ import { GrLocation } from "react-icons/gr";
 import { BsFillSunFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiLoader } from "react-icons/fi";
-import { FaSadTear } from "react-icons/fa";
+import { weather } from "../../api/weather";
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
+  const { weatherinfo, weatherApiCall, resetweatherinfo } = weather({});
   const [item, setitem] = useState([]);
   // const [category, set] = useState("전체");
   const [option, setOption] = useState("");
@@ -35,6 +36,8 @@ const SearchPage = () => {
     let URL;
     setitem([]);
 
+    let item_weather = [];
+    let length = 0;
     if (!contentid) {
       URL = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&ServiceKey=VWVz5AVsiy%2F0nCNOXrxaxJy5b7pzOz3GyOBxO3T8av6rb9xuOhTZpv50%2BbrWeqaaok0Nk77O%2B%2F8wCWW4MPJLNA%3D%3D&listYN=Y&arrange=A&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&keyword=${searchTerm}&_type=json`;
     } else {
@@ -50,9 +53,39 @@ const SearchPage = () => {
         const { body } = response;
         const { items } = body;
         const { item } = items;
+        item_weather = item;
         setitem(item);
+        if (item == null) {
+          return Promise.reject(new Error("No items found.")); // Return a rejected Promise to exit the chain
+        }
+        length = item_weather.length;
+
         console.log("item", item);
-        console.log("loading", isloading);
+      })
+      .then(() => {
+        const weather = []; // Array to store promises
+
+        for (var i = 0; i < length; i++) {
+          weather[i] = weatherApiCall(
+            item_weather[i].mapy,
+            item_weather[i].mapx
+          );
+        }
+
+        // Wait for all promises to resolve
+        Promise.all(weather).then(() => {
+          // All promises resolved
+          console.log("Weather API calls completed");
+          console.log(weatherinfo);
+
+          //add weather to item
+          for (var i = 0; i < length; i++) {
+            item_weather[i].rain = weatherinfo[i][0].obsrValue;
+            item_weather[i].humid = weatherinfo[i][1].obsrValue;
+            item_weather[i].temperature = weatherinfo[i][3].obsrValue;
+          }
+          console.log("weather added:", item_weather);
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -129,12 +162,14 @@ const SearchPage = () => {
     setOption(event.target.value);
   };
   const handleKeyDown = (event) => {
+    resetweatherinfo();
     if (event.key === "Enter") {
       navigate(`/search?q=${keyword}&id=${option}`);
     }
   };
 
   const handlesearch = (e) => {
+    resetweatherinfo();
     navigate(`/search?q=${keyword}&id=${option}`);
   };
 

@@ -57,7 +57,7 @@ const Search = () => {
               <GrLocation className="icon" onClick={handlesearch} />
             </div>
           </div>
-          <div className="option2">
+          <div className="option">
             <label htmlFor="input flex">Second option:</label>
             <div className="select-wrapper">
               <select value={option} onChange={handleOption}>
