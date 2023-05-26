@@ -73,6 +73,7 @@ const SearchPage = () => {
         console.log("item", item);
       })
       .then(() => {
+        //TODO: need to handle a case when mapx, mapy is 0
         const weather = []; // Array to store promises
 
         for (var i = 0; i < length; i++) {
