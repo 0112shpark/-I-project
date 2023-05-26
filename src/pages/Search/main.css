@@ -170,3 +170,16 @@ img {
   height: 150px;
   margin-bottom: 10px;
 }
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.pagination button {
+  border: none;
+  cursor: pointer;
+}
+.active {
+  color: red;
+}

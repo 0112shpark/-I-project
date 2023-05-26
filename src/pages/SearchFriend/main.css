@@ -28,7 +28,7 @@
   left: 0;
   width: 380px;
   height: 585px;
-  overflow: hidden;
+
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
@@ -58,11 +58,11 @@
   height: 120px;
 }
 .image-container {
-    margin-right: 10px; /* Adjust the desired spacing */
-  }
-  
-  .info-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  margin-right: 10px; /* Adjust the desired spacing */
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

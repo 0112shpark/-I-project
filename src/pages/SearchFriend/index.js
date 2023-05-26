@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
 import "./main.css";
 import Nav from "../../components/Nav";
-import Mypage from "../../components/mypage";
+import Searchfriend from "../../components/searchfriend";
 
-const MyPage = () => {
+const SearchFriend = () => {
 
   const auth = getAuth();
   const navigate = useNavigate();
@@ -25,10 +25,10 @@ const MyPage = () => {
     <>
       <div className="container">
         <Nav />
-        <Mypage /> 
+        <Searchfriend /> 
       </div>
     </>
   );
 };
 
-export default MyPage;
+export default SearchFriend;

@@ -71,6 +71,21 @@ const Nav = () => {
           </li>
         </>
       );
+    } else if (path === "/search") {
+      return (
+        <>
+          <li className="navItem">
+            <a href="/main" className="navLink">
+              <AiFillHome className="icon" /> Main
+            </a>
+          </li>
+          <li className="navItem">
+            <a href="/About" className="navLink">
+              <CgProfile className="icon" /> About
+            </a>
+          </li>
+        </>
+      );
     }
   };
   const showNav = () => {

@@ -1,0 +1,107 @@
+.container1 {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 380px;
+  height: 585px;
+  overflow: hidden;
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
+}
+.overlay1 {
+  
+    z-index: -1;
+  }
+
+  
+  .search-bar input {
+    border: none;
+    border-bottom: 2px solid blue; /* Change the color here */
+    padding: 5px;
+    width: 200px;
+    font-size: 16px;
+    z-index: 2; /* Ensure the input is at a higher stacking order */
+  }
+  .search-bar::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: red; /* Change the color here */
+    z-index: -1; /* Lower the stacking order of the line */
+  }
+.img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+ 
+}
+
+.image-container {
+    margin-right: 10px; /* Adjust the desired spacing */
+  }
+  
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .custom-button {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    /* Add any additional styles to customize the button */
+  }
+  
+  .custom-button:hover {
+    background-color: #2980b9;
+  }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 60px;
+    margin-top:100px;
+    position: relative;
+  }
+  
+  .search-text {
+    color: blue; /* Add your desired color */
+    cursor: pointer;
+  }
+  .favorites-container {
+    height: 400px; /* Set the desired height */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .favorites-list {
+    padding: 10px;
+  }
+  
+  .favorite-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .favorite-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }

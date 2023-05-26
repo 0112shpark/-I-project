@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import video from "../videos/korea.mp4";
 import "./search.css";
-import { GrLocation } from "react-icons/gr";
+import { HiSearch } from "react-icons/hi";
 import { BiBus } from "react-icons/bi";
 import { TbTrain } from "react-icons/tb";
 import { AiOutlineGithub } from "react-icons/ai";
@@ -54,7 +54,7 @@ const Search = () => {
                 onChange={handleinput}
                 onKeyDown={handleKeyDown}
               />
-              <GrLocation className="icon" onClick={handlesearch} />
+              <HiSearch className="icon" onClick={handlesearch} />
             </div>
           </div>
           <div className="option">

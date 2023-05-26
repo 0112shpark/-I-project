@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useData } from "../../hooks/userData";
 import "./main.css";
 import Nav from "../../components/Nav";
-import Mypage from "../../components/mypage";
+import Friendslist from "../../components/friendslist";
 
-const MyPage = () => {
+const FriendsList = () => {
 
   const auth = getAuth();
   const navigate = useNavigate();
@@ -25,10 +25,10 @@ const MyPage = () => {
     <>
       <div className="container">
         <Nav />
-        <Mypage /> 
+        <Friendslist /> 
       </div>
     </>
   );
 };
 
-export default MyPage;
+export default FriendsList;
