@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Nav from "../../components/Nav";
 import "./main.css";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -25,7 +25,9 @@ const SearchPage = () => {
   const searchTerm = query.get("q");
   const contentid = query.get("id");
   const [currentPage, setCurrentPage] = useState(1);
-  let pageNo = 1;
+  const containerRef = useRef(null);
+  const [render, setRender] = useState("");
+  const [updatestat, setUpdatestat] = useState(false);
 
   useEffect(() => {
     //contentstypeID
@@ -39,9 +41,9 @@ const SearchPage = () => {
     // 39 => 음식점
     let URL;
     setitem([]);
-
+    setRender("날씨 정보 받아오는 중...");
+    setUpdatestat(false);
     let item_weather = [];
-
     let length = 0;
     if (!contentid) {
       URL = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&pageNo=${currentPage}&MobileOS=ETC&MobileApp=AppTest&ServiceKey=VWVz5AVsiy%2F0nCNOXrxaxJy5b7pzOz3GyOBxO3T8av6rb9xuOhTZpv50%2BbrWeqaaok0Nk77O%2B%2F8wCWW4MPJLNA%3D%3D&listYN=Y&arrange=A&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&keyword=${searchTerm}&_type=json`;
@@ -56,12 +58,12 @@ const SearchPage = () => {
         console.log(result);
         const { response } = result;
         const { body } = response;
-        const { totalCount } = body;
-        setTotalPages(Math.ceil(totalCount / 10));
-        console.log(totalPages);
-        const { items } = body;
+        const { totalCount, items } = body;
+
+        // const { items } = body;
         const { item } = items;
         item_weather = item;
+        setTotalPages(Math.ceil(totalCount / 10));
         setitem(item);
         if (item == null) {
           return Promise.reject(new Error("No items found.")); // Return a rejected Promise to exit the chain
@@ -72,7 +74,7 @@ const SearchPage = () => {
       })
       .then(() => {
         const weather = []; // Array to store promises
-        resetweatherinfo();
+
         for (var i = 0; i < length; i++) {
           weather[i] = weatherApiCall(
             item_weather[i].mapy,
@@ -84,25 +86,66 @@ const SearchPage = () => {
         Promise.all(weather).then(() => {
           // All promises resolved
           console.log("Weather API calls completed");
-          console.log(weatherinfo);
+          console.log("weather info:", weatherinfo);
 
           //add weather to item
           for (var i = 0; i < length; i++) {
-            item_weather[i].rain = weatherinfo[i][0].obsrValue;
+            // 0 = sun
+            // 1 = rain
+            // 2 = rainsnow
+            // 3 = snow
+            // 5 = rain
+            // 6 = rainsnow
+            // 7 = snow
+            console.log("weather info:", weatherinfo[i][0].obsrValue);
+            switch (weatherinfo[i][0].obsrValue) {
+              case "0":
+                item_weather[i].rain = "/images/sun.png";
+                break;
+              case "1":
+                item_weather[i].rain = "/images/rain.png";
+                break;
+              case "2":
+                item_weather[i].rain = "/images/rainsnow.png";
+                break;
+              case "3":
+                item_weather[i].rain = "/images/snowpng";
+                break;
+              case "5":
+                item_weather[i].rain = "/images/rain.png";
+                break;
+              case "6":
+                item_weather[i].rain = "/images/rainsnow.png";
+                break;
+              case "7":
+                item_weather[i].rain = "/images/snow.png";
+                break;
+              default:
+                item_weather[i].rain = "/images/unkown.png";
+                break;
+            }
+
             item_weather[i].humid = weatherinfo[i][1].obsrValue;
             item_weather[i].temperature = weatherinfo[i][3].obsrValue;
           }
+
+          setitem(item_weather);
           console.log("weather added:", item_weather);
+          setRender("날씨 정보 업데이트 완료!");
+          setUpdatestat(true);
+          setKeyword(searchTerm);
+          resetweatherinfo();
         });
       })
       .catch((error) => {
         console.error(error);
       })
       .finally(() => {
+        // setRender(true);
         setIsloading(false); // Set isLoading to false after data fetching is complete (success or error)
       });
     setIsloading(false);
-  }, [contentid, isloading, searchTerm, currentPage]);
+  }, [contentid, searchTerm, currentPage]);
 
   const handlecategory = () => {
     switch (contentid) {
@@ -170,35 +213,43 @@ const SearchPage = () => {
     setOption(event.target.value);
   };
   const handleKeyDown = (event) => {
-    resetweatherinfo();
     if (event.key === "Enter") {
+      resetweatherinfo();
       navigate(`/search?q=${keyword}&id=${option}`);
+      setCurrentPage(1);
     }
   };
 
   const handlesearch = (e) => {
     resetweatherinfo();
     navigate(`/search?q=${keyword}&id=${option}`);
+    setCurrentPage(1);
   };
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
+    containerRef.current.scrollIntoView({ behavior: "smooth" });
+    resetweatherinfo();
   };
 
   const handlePrevPageClick = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
+    resetweatherinfo();
+    containerRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleNextPageClick = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
+    resetweatherinfo();
+    containerRef.current.scrollIntoView({ behavior: "smooth" });
   };
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    const visiblePageCount = 5; // Number of page numbers to show at a time
+    const visiblePageCount = 5;
     const halfVisibleCount = Math.floor(visiblePageCount / 2);
     let startPage = currentPage - halfVisibleCount;
 
@@ -207,7 +258,6 @@ const SearchPage = () => {
     }
 
     let endPage = startPage + visiblePageCount - 1;
-    // console.log(startPage, endPage, totalPages);
 
     if (endPage > totalPages) {
       endPage = totalPages;
@@ -227,9 +277,10 @@ const SearchPage = () => {
         </button>
       );
     }
-    // console.log("page:", pageNumbers);
+
     return pageNumbers;
   };
+
   return (
     <>
       <div className="container">
@@ -261,10 +312,15 @@ const SearchPage = () => {
             </select>
           </div>
         </div>
+        {
+          <div className={`updatestatus ${updatestat ? "done" : " "}`}>
+            {render}
+          </div>
+        }
         <div className="search-topics">
           "{searchTerm}"에 대한 {handlecategory()} 검색 결과입니다.
         </div>
-        <div className="search-results">
+        <div className="search-results" ref={containerRef}>
           {isloading ? (
             <div className="loading">
               <FiLoader className="icon"></FiLoader>
@@ -290,8 +346,27 @@ const SearchPage = () => {
                   <div className="item-icons">
                     <div className="icons">
                       <AiOutlineHeart className="icon heart"></AiOutlineHeart>
-                      <BsFillSunFill className="icon"></BsFillSunFill>
-                      <BsFillSunFill className="icon"></BsFillSunFill>
+                      <img
+                        className="weather1-stat"
+                        src={data.rain}
+                        alt="rain"
+                      ></img>
+                      <div className="weather-wrapper">
+                        <img
+                          className="weather1"
+                          src="/images/temp.png"
+                          alt="temp"
+                        ></img>
+                        <div className="temperature"> {data.temperature}°C</div>
+                      </div>
+                      <div className="weather-wrapper">
+                        <img
+                          className="weather1"
+                          src="/images/humidity.png"
+                          alt="humidity"
+                        ></img>
+                        <div className="humidity"> {data.humid}%</div>
+                      </div>
                     </div>
                   </div>
                 </div>

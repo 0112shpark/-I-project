@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/database';
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 import "./searchfriend.css";
 
 const SearchFriend = () => {
   const [usernames, setUsernames] = useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -19,12 +20,12 @@ const SearchFriend = () => {
         if (users) {
           const usernames = Object.entries(users).map(([uid, user]) => ({
             uid,
-            username: user.username
+            username: user.username,
           }));
           setUsernames(usernames);
         }
       } catch (error) {
-        console.log('Error fetching usernames:', error);
+        console.log("Error fetching usernames:", error);
       }
     };
 
@@ -32,7 +33,7 @@ const SearchFriend = () => {
   }, []);
 
   // Filter usernames based on userId
-  const filteredUsernames = usernames.filter(username =>
+  const filteredUsernames = usernames.filter((username) =>
     username.username.includes(userId)
   );
 
@@ -47,9 +48,9 @@ const SearchFriend = () => {
       <ul>
         {filteredUsernames.map(({ uid, username }, index) => (
           <li key={index} style={{ color: "black" }}>
-            <a href="#" onClick={(event) => handleUsernameClick(uid, event)}>
+            <div onClick={(event) => handleUsernameClick(uid, event)}>
               {username}
-            </a>
+            </div>
           </li>
         ))}
       </ul>

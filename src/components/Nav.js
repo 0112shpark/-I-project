@@ -10,6 +10,19 @@ import { AiFillHome } from "react-icons/ai";
 import { getAuth, signOut } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useData } from "../hooks/userData";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAHcapNthGtxiWfwLqFJ-lAaixYIHNhDdw",
+  authDomain: "jaban-7c8c2.firebaseapp.com",
+  databaseURL: "https://jaban-7c8c2-default-rtdb.firebaseio.com",
+  projectId: "jaban-7c8c2",
+  storageBucket: "jaban-7c8c2.appspot.com",
+  messagingSenderId: "862801813260",
+  appId: "1:862801813260:web:4a8e0911e28ed43cd5b329",
+  measurementId: "G-B6Q439LLL4",
+};
 
 const Nav = () => {
   const [active, setActive] = useState("navBar");
@@ -18,6 +31,11 @@ const Nav = () => {
   const { userData, clearUserData } = useData({});
   const { pathname } = useLocation();
   const [path, setPath] = useState("/main");
+
+  const [text, setText] = useState("");
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  const userId = database.ref(`users/${userData.uid}`);
 
   useEffect(() => {
     setPath(pathname);
