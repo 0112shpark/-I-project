@@ -93,7 +93,7 @@ const Nav = () => {
           </li>
         </>
       );
-    } else if (path === "/search") {
+    } else {
       return (
         <>
           <li className="navItem">
@@ -102,9 +102,16 @@ const Nav = () => {
             </a>
           </li>
           <li className="navItem">
-            <a href="/About" className="navLink">
-              <CgProfile className="icon" /> About
-            </a>
+            {userData && (
+              <li className="navItem">
+                <a
+                  href={`../MyPage?userId=${userData.uid}`}
+                  className="navLink"
+                >
+                  <CgProfile className="icon" /> MY Page
+                </a>
+              </li>
+            )}
           </li>
         </>
       );

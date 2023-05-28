@@ -7,7 +7,6 @@ import Nav from "../../components/Nav";
 import Friendslist from "../../components/friendslist";
 
 const FriendsList = () => {
-
   const auth = getAuth();
   const navigate = useNavigate();
   const { userData, clearUserData } = useData({});
@@ -22,12 +21,10 @@ const FriendsList = () => {
       .catch((error) => console.error(error));
   };
   return (
-    <>
-      <div className="container">
-        <Nav />
-        <Friendslist /> 
-      </div>
-    </>
+    <div className="container">
+      <Nav />
+      <Friendslist />
+    </div>
   );
 };
 

@@ -56,14 +56,14 @@ const Mypage = () => {
           .then((snapshot) => {
             const userData = snapshot.val();
             setUsername(userData.username);
-            setPhotoURL(userData.photoUrl);
+            // setPhotoURL(userData.photoUrl);
           })
           .catch((error) => {
             console.log("Error fetching user data:", error);
           });
       }
     }
-  }, [userId]);
+  }, [userData, userId]);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
