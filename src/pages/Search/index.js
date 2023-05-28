@@ -4,15 +4,32 @@ import "./main.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HiSearch } from "react-icons/hi";
 import { BsFillSunFill } from "react-icons/bs";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import { FiLoader } from "react-icons/fi";
 import { weather } from "../../api/weather";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+import { useData } from "../../hooks/userData";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAHcapNthGtxiWfwLqFJ-lAaixYIHNhDdw",
+  authDomain: "jaban-7c8c2.firebaseapp.com",
+  databaseURL: "https://jaban-7c8c2-default-rtdb.firebaseio.com",
+  projectId: "jaban-7c8c2",
+  storageBucket: "jaban-7c8c2.appspot.com",
+  messagingSenderId: "862801813260",
+  appId: "1:862801813260:web:4a8e0911e28ed43cd5b329",
+  measurementId: "G-B6Q439LLL4",
+};
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
   const { weatherinfo, weatherApiCall, resetweatherinfo } = weather({});
   const [item, setitem] = useState([]);
+  const { userData } = useData({});
   // const [category, set] = useState("전체");
   const [option, setOption] = useState("");
   const [totalPages, setTotalPages] = useState(0);
@@ -28,6 +45,8 @@ const SearchPage = () => {
   const containerRef = useRef(null);
   const [render, setRender] = useState("");
   const [updatestat, setUpdatestat] = useState(false);
+  const [favoriteItems, setFavoriteItems] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     //contentstypeID
@@ -43,6 +62,7 @@ const SearchPage = () => {
     setitem([]);
     setRender("날씨 정보 받아오는 중...");
     setUpdatestat(false);
+    setError(false);
     let item_weather = [];
     let length = 0;
     if (!contentid) {
@@ -66,18 +86,21 @@ const SearchPage = () => {
         setTotalPages(Math.ceil(totalCount / 10));
         setitem(item);
         if (item == null) {
+          setUpdatestat(true);
+          setTotalPages(1);
+          setError(true);
           return Promise.reject(new Error("No items found.")); // Return a rejected Promise to exit the chain
         }
         length = item_weather.length;
 
         console.log("item", item);
       })
-      .then(() => {
+      .then(async function () {
         //TODO: need to handle a case when mapx, mapy is 0
         const weather = []; // Array to store promises
 
         for (var i = 0; i < length; i++) {
-          weather[i] = weatherApiCall(
+          weather[i] = await weatherApiCall(
             item_weather[i].mapy,
             item_weather[i].mapx
           );
@@ -98,7 +121,11 @@ const SearchPage = () => {
             // 5 = rain
             // 6 = rainsnow
             // 7 = snow
-            console.log("weather info:", weatherinfo[i][0].obsrValue);
+            if (weatherinfo[i] === null) {
+              item_weather[i].rain = "/images/unknown.png";
+
+              continue;
+            }
             switch (weatherinfo[i][0].obsrValue) {
               case "0":
                 item_weather[i].rain = "/images/sun.png";
@@ -206,6 +233,25 @@ const SearchPage = () => {
     return "전체";
   };
 
+  const toggleFavorite = (contentId, data) => {
+    if (favoriteItems.includes(contentId)) {
+      setFavoriteItems(favoriteItems.filter((item) => item !== contentId));
+      database.ref(`users/${userData.uid}/favorites/${contentId}`).remove();
+    } else {
+      setFavoriteItems([...favoriteItems, contentId]);
+      const itemData = {
+        title: data.title,
+        image: data.firstimage,
+      };
+      database
+        .ref(`users/${userData.uid}/favorites/${contentId}`)
+        .set(itemData);
+    }
+  };
+  const isFavorite = (contentId) => {
+    return favoriteItems.includes(contentId);
+  };
+
   const handleinput = (event) => {
     const value = event.target.value;
     setKeyword(value);
@@ -218,6 +264,7 @@ const SearchPage = () => {
       resetweatherinfo();
       navigate(`/search?q=${keyword}&id=${option}`);
       setCurrentPage(1);
+      setitem([]);
     }
   };
 
@@ -225,18 +272,21 @@ const SearchPage = () => {
     resetweatherinfo();
     navigate(`/search?q=${keyword}&id=${option}`);
     setCurrentPage(1);
+    setitem([]);
   };
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
     containerRef.current.scrollIntoView({ behavior: "smooth" });
     resetweatherinfo();
+    setitem([]);
   };
 
   const handlePrevPageClick = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
+    setitem([]);
     resetweatherinfo();
     containerRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -246,6 +296,7 @@ const SearchPage = () => {
       setCurrentPage(currentPage + 1);
     }
     resetweatherinfo();
+    setitem([]);
     containerRef.current.scrollIntoView({ behavior: "smooth" });
   };
   const renderPageNumbers = () => {
@@ -272,6 +323,7 @@ const SearchPage = () => {
         <button
           key={i}
           className={i === currentPage ? "active" : ""}
+          disabled={error}
           onClick={() => handlePageClick(i)}
         >
           {i}
@@ -286,7 +338,7 @@ const SearchPage = () => {
     <>
       <div className="container">
         <Nav></Nav>
-        <div className="search-destination">
+        <div className="search-destination" ref={containerRef}>
           <div className="search-input">
             <input
               type="text"
@@ -321,62 +373,81 @@ const SearchPage = () => {
         <div className="search-topics">
           "{searchTerm}"에 대한 {handlecategory()} 검색 결과입니다.
         </div>
-        <div className="search-results" ref={containerRef}>
-          {isloading ? (
-            <div className="loading">
-              <FiLoader className="icon"></FiLoader>
-            </div>
-          ) : item ? (
-            item.map((data) => (
-              <div className="items" key={data.contentid}>
-                {data.firstimage ? (
-                  <img
-                    src={data.firstimage}
-                    className="firstimage"
-                    alt={data.title}
-                  />
-                ) : (
-                  <img
-                    src="/images/noimage.jpg"
-                    className="firstimage"
-                    alt={data.title}
-                  />
-                )}
-                <div className="item-details">
-                  <h2 className="titles">{data.title}</h2>
-                  <div className="item-icons">
-                    <div className="icons">
-                      <AiOutlineHeart className="icon heart"></AiOutlineHeart>
-                      <img
-                        className="weather1-stat"
-                        src={data.rain}
-                        alt="rain"
-                      ></img>
-                      <div className="weather-wrapper">
+        <div className="search-results">
+          {updatestat ? (
+            item ? (
+              item.map((data) => (
+                <div className="items" key={data.contentid}>
+                  {data.firstimage ? (
+                    <img
+                      src={data.firstimage}
+                      className="firstimage"
+                      alt={data.title}
+                    />
+                  ) : (
+                    <img
+                      src="/images/noimage.jpg"
+                      className="firstimage"
+                      alt={data.title}
+                    />
+                  )}
+                  <div className="item-details">
+                    <h2 className="titles">{data.title}</h2>
+                    <div className="item-icons">
+                      <div className="icons">
+                        {isFavorite(data.contentid) ? (
+                          <AiFillHeart
+                            className="icon heart"
+                            onClick={() => toggleFavorite(data.contentid, data)}
+                          />
+                        ) : (
+                          <AiOutlineHeart
+                            className="icon heart"
+                            onClick={() => toggleFavorite(data.contentid, data)}
+                          />
+                        )}
                         <img
-                          className="weather1"
-                          src="/images/temp.png"
-                          alt="temp"
+                          className="weather1-stat"
+                          src={data.rain}
+                          alt="rain"
                         ></img>
-                        <div className="temperature"> {data.temperature}°C</div>
-                      </div>
-                      <div className="weather-wrapper">
-                        <img
-                          className="weather1"
-                          src="/images/humidity.png"
-                          alt="humidity"
-                        ></img>
-                        <div className="humidity"> {data.humid}%</div>
+                        <div className="weather-wrapper">
+                          <img
+                            className="weather1"
+                            src="/images/temp.png"
+                            alt="temp"
+                          ></img>
+                          <div className="temperature">
+                            {" "}
+                            {data.temperature}°C
+                          </div>
+                        </div>
+                        <div className="weather-wrapper">
+                          <img
+                            className="weather1"
+                            src="/images/humidity.png"
+                            alt="humidity"
+                          ></img>
+                          <div className="humidity"> {data.humid}%</div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="no-results">
+                <img className="sad-tear" src="/images/sad.gif" alt="sad"></img>
+                "{searchTerm}"에 대한 {handlecategory()} 검색 결과가 없습니다.
               </div>
-            ))
+            )
           ) : (
-            <div className="no-results">
-              <img className="sad-tear" src="/images/sad.gif" alt="sad"></img>"
-              {searchTerm}"에 대한 {handlecategory()} 검색 결과가 없습니다.
+            <div className="loading">
+              <img
+                className="loading"
+                src="/images/loading.gif"
+                alt="load"
+              ></img>
             </div>
           )}
         </div>
@@ -392,7 +463,7 @@ const SearchPage = () => {
           <div className="page-numbers">{renderPageNumbers()}</div>
           <button
             className="arrow"
-            disabled={currentPage === totalPages} // Replace 'totalPages' with the actual total number of pages in your data
+            disabled={currentPage === totalPages}
             onClick={handleNextPageClick}
           >
             ▶

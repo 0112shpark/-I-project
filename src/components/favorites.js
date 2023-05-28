@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/database';
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 import "./favorites.css";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
@@ -15,14 +15,17 @@ const Favorites = () => {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const snapshot = await firebase.database().ref(`users/${userId}/favorites`).once("value");
+        const snapshot = await firebase
+          .database()
+          .ref(`users/${userId}/favorites`)
+          .once("value");
         const favoritesData = snapshot.val();
         if (favoritesData) {
           const favoritesList = Object.values(favoritesData);
           setFavorites(favoritesList);
         }
       } catch (error) {
-        console.log('Error fetching favorites:', error);
+        console.log("Error fetching favorites:", error);
       }
     };
 

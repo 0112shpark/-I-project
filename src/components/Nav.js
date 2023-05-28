@@ -52,11 +52,13 @@ const Nav = () => {
               <BsInfoCircle className="icon" /> About
             </a>
           </li>
-          <li className="navItem">
-            <a href="/MyPage" className="navLink">
-              <CgProfile className="icon" /> MY Page
-            </a>
-          </li>
+          {userData && (
+            <li className="navItem">
+              <a href={`../MyPage?userId=${userData.uid}`} className="navLink">
+                <CgProfile className="icon" /> MY Page
+              </a>
+            </li>
+          )}
         </>
       );
     } else if (path === "/About") {
@@ -67,11 +69,13 @@ const Nav = () => {
               <AiFillHome className="icon" /> Main
             </a>
           </li>
-          <li className="navItem">
-            <a href="/MyPage" className="navLink">
-              <CgProfile className="icon" /> MY Page
-            </a>
-          </li>
+          {userData && (
+            <li className="navItem">
+              <a href={`../MyPage?userId=${userData.uid}`} className="navLink">
+                <CgProfile className="icon" /> MY Page
+              </a>
+            </li>
+          )}
         </>
       );
     } else if (path === "/MyPage") {

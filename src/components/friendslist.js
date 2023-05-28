@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/database';
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 import "./friendslist.css";
 
 const FriendList = () => {
@@ -21,13 +21,13 @@ const FriendList = () => {
           const friendUsernames = Object.keys(friendIds).map((friendId) => {
             return {
               uid: friendId,
-              username: users[friendId]?.username || ""
+              username: users[friendId]?.username || "",
             };
           });
           setUsernames(friendUsernames);
         }
       } catch (error) {
-        console.log('Error fetching usernames:', error);
+        console.log("Error fetching usernames:", error);
       }
     };
 
@@ -54,6 +54,5 @@ const FriendList = () => {
     </div>
   );
 };
-
 
 export default FriendList;

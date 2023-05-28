@@ -12,7 +12,7 @@ const emailLogin = (Email, Password) => {
       //setUserData(user);
       user.photoURL =
         "https://img.etoday.co.kr/pto_db/2014/07/600/20140716083334_480290_1476_739.jpg";
-      console.log("Logged in user:", user);
+      console.log("Logged in user-email:", user);
       localStorage.setItem("userData", JSON.stringify(user));
     })
     .catch((error) => {

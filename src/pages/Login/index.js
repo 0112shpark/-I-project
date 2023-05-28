@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { getDatabase, ref, set } from "firebase/database";
+
 import "./Login.css";
 import {
   GoogleAuthProvider,
@@ -27,6 +29,8 @@ const Login = () => {
   // const [userData, setUserData] = useState(initialUserData);
   const { userData, setUserData, clearUserData } = useData({});
   const [Email, setEmail] = useState("");
+  const PhotoUrl =
+    "https://firebasestorage.googleapis.com/v0/b/jaban-7c8c2.appspot.com/o/fish.png?alt=media&token=01e42c45-1b16-4001-a8df-95bfb54d02df";
   const [UserName, setUserName] = useState("");
   const [Password, setPassword] = useState("");
   const [isSignUP, setisSignUP] = useState(true);
@@ -122,6 +126,15 @@ const Login = () => {
 
         setUserData(result.user);
         localStorage.setItem("userData", JSON.stringify(result.user));
+        const userId = result.user.uid;
+        const db = getDatabase();
+        set(ref(db, "users/" + userId), {
+          username: result.user.displayName,
+          email: result.user.providerData[0].email,
+          photoURL: result.user.photoURL,
+          friends: "0",
+        });
+        set(ref(db, "friends/" + userId));
       })
       .catch((error) => console.error(error));
   };
@@ -142,6 +155,15 @@ const Login = () => {
         console.log("user-name:", result.user.displayName);
         setUserData(user);
         localStorage.setItem("userData", JSON.stringify(user));
+        const userId = result.user.uid;
+        const db = getDatabase();
+        set(ref(db, "users/" + userId), {
+          username: result.user.displayName,
+          email: result.user.providerData[0].email,
+          photoURL: result.user.photoURL,
+          friends: "0",
+        });
+        set(ref(db, "friends/" + userId));
       })
       .catch((error) => {
         console.error(error);
@@ -167,13 +189,16 @@ const Login = () => {
     const name = event.target.name;
     if (name === "signup") {
       setisSignUP(true);
-      SignUp(Email, Password, UserName);
-      console.log("Email:", Email);
-      console.log("Password:", Password);
-      console.log("Username:", UserName);
+      SignUp(Email, Password, UserName, PhotoUrl).then((result) => {
+        console.log("Email:", Email);
+        console.log("Photo:", PhotoUrl);
+        console.log("Password:", Password);
+        console.log("Username:", UserName);
+        //  setUserData(result.user);
+        //     localStorage.setItem("userData", JSON.stringify(result.user));
+      });
     } else if (name === "login") {
       EmailLogin(Email, Password);
-
       setisSignUP(false);
     }
   };
@@ -377,14 +402,14 @@ const Login = () => {
             <h2 className="title__h2">Or connect with</h2>
             <div
               className="buttons__signup buttons__signup--social"
-              //onClick={handleClick}
+              onClick={handleFaceBook}
             >
               <i className="fab fa-facebook-f" aria-hidden="true"></i>
               &nbsp;facebook
             </div>
             <div
               className="buttons__signup buttons__signup--social"
-              //onClick={handleClick}
+              onClick={handleAuth}
             >
               <i className="fab fa-google" aria-hidden="true"></i>&nbsp;google
             </div>

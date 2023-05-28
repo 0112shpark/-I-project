@@ -8,7 +8,7 @@ import { getDatabase, ref, set } from "firebase/database";
 
 import React from "react";
 
-const SignUp = (Email, Password, UserName) => {
+const SignUp = (Email, Password, UserName, PhotoUrl) => {
   const auth = getAuth();
 
   createUserWithEmailAndPassword(auth, Email, Password)
@@ -17,17 +17,20 @@ const SignUp = (Email, Password, UserName) => {
       console.log("User signed up successfully:", user);
       alert("Successfully signed up");
 
-
       // add to database
+      // console.log("User before storing in localStorage:", user);
+      localStorage.setItem("userData", JSON.stringify(user));
 
       const userId = auth.currentUser.uid;
       const db = getDatabase();
+      console.log("Logged in user:", user);
+      // Save user data to the 'users' collection
       set(ref(db, "users/" + userId), {
         username: UserName,
         email: Email,
+        photoUrl: PhotoUrl,
         friends: "0",
       });
-      set(ref(db, "friends/" + userId));
     })
     .catch((error) => {
       if (error.code === "auth/email-already-in-use") {

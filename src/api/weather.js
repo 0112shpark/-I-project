@@ -93,6 +93,7 @@ export const weather = () => {
 
     moment.tz.setDefault("Asia/Seoul");
     // const date = moment().format("YYYYMMDD");
+
     const rs = dfsXyConv("toXY", lat, lon);
     // console.log(rs);
     const dataType = "JSON";
@@ -119,10 +120,17 @@ export const weather = () => {
       const response = await window.fetch(all_url);
       //console.log(response)
       const data = await response.json();
-      const final_data = await data["response"]["body"]["items"]["item"];
+      console.log(data);
+      const semi_final_data = await data["response"];
+      if (semi_final_data["header"].resultCode !== "00") {
+        weatherinfo.push(null);
+        return "error";
+      }
+
+      const final_data = await semi_final_data["body"]["items"]["item"];
+
       // console.log("final:", final_data);
       //console.log(Object.keys(data));
-      //console.log(data);
       weatherinfo.push(final_data);
       return final_data;
     } catch (error) {

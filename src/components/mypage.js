@@ -1,8 +1,7 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import video from "../videos/korea.mp4";
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/database';
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useData } from "../hooks/userData";
@@ -27,36 +26,44 @@ const Mypage = () => {
   const [username, setUsername] = useState("");
   const [isFriendAdded, setIsFriendAdded] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const userId = searchParams.get("userId");
 
   useEffect(() => {
-    if (userId) {
-      const friendRef = database.ref(`users/${userData.uid}/friends/${userId}`);
-      friendRef
-        .once("value")
-        .then((snapshot) => {
-          const isFriend = snapshot.exists();
-          setIsFriendAdded(isFriend);
-        })
-        .catch((error) => {
-          console.log("Error checking friend status:", error);
-        });
+    if (userData) {
+      setPhotoURL(userData.photoURL);
 
-      const userRef = database.ref(`users/${userId}/username`);
-      userRef
-        .once("value")
-        .then((snapshot) => {
-          const username = snapshot.val();
-          setUsername(username);
-        })
-        .catch((error) => {
-          console.log("Error fetching username:", error);
-        });
+      if (userId) {
+        const friendRef = database.ref(
+          `users/${userData.uid}/friends/${userId}`
+        );
+        friendRef
+          .once("value")
+          .then((snapshot) => {
+            const isFriend = snapshot.exists();
+            setIsFriendAdded(isFriend);
+          })
+          .catch((error) => {
+            console.log("Error checking friend status:", error);
+          });
+
+        const userRef = database.ref(`users/${userId}`);
+        userRef
+          .once("value")
+          .then((snapshot) => {
+            const userData = snapshot.val();
+            setUsername(userData.username);
+            setPhotoURL(userData.photoUrl);
+          })
+          .catch((error) => {
+            console.log("Error fetching user data:", error);
+          });
+      }
     }
-  }, [userId, userData.uid]);
+  }, [userId]);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -74,17 +81,17 @@ const Mypage = () => {
               .remove()
               .then(() => {
                 setIsFriendAdded(false);
-                console.log('Friend removed successfully');
+                console.log("Friend removed successfully");
               })
               .catch((error) => {
-                console.log('Error removing friend:', error);
+                console.log("Error removing friend:", error);
               });
           } else {
-            console.log('Friend does not exist');
+            console.log("Friend does not exist");
           }
         })
         .catch((error) => {
-          console.log('Error checking friend existence:', error);
+          console.log("Error checking friend existence:", error);
         });
     } else {
       // Add friend to Firebase database
@@ -93,10 +100,10 @@ const Mypage = () => {
         .set(true)
         .then(() => {
           setIsFriendAdded(true);
-          console.log('Friend added successfully');
+          console.log("Friend added successfully");
         })
         .catch((error) => {
-          console.log('Error adding friend:', error);
+          console.log("Error adding friend:", error);
         });
     }
   };
@@ -113,7 +120,6 @@ const Mypage = () => {
     event.preventDefault();
     navigate(`/favorites?userId=${uid}`);
   };
-
   return (
     <section className="mypage">
       <div className="overlay1"></div>
@@ -133,17 +139,14 @@ const Mypage = () => {
           <div className="image-container">
             <img
               className="img"
-              src={userData && userData.photoURL}
+              src={photoURL} // Updated state variable name
               alt={userData && userData.displayName}
             />
           </div>
           <div className="info-container">
             {userId !== userData?.uid && (
               <div className="button-container">
-                <button
-                  className="custom-button"
-                  onClick={handleAddFriend}
-                >
+                <button className="custom-button" onClick={handleAddFriend}>
                   {isFriendAdded ? "Friend Added" : "Add Friend"}
                 </button>
               </div>
@@ -151,11 +154,11 @@ const Mypage = () => {
             {username && <p style={{ fontWeight: "bold" }}>{username}</p>}
           </div>
           <div>
-          <a href="#" onClick={(event) => handleFriendsClick(userData?.uid, event)}>
-            My Friends
-          </a>
+            <a href="#" onClick={(event) => handleFriendsClick(userId, event)}>
+              My Friends
+            </a>
           </div>
-          <a href="#" onClick={(event) => handleFavoritesClick(userData?.uid, event)}>
+          <a href="#" onClick={(event) => handleFavoritesClick(userId, event)}>
             Favorites
           </a>
         </div>
@@ -165,4 +168,3 @@ const Mypage = () => {
 };
 
 export default Mypage;
-

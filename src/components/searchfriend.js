@@ -33,9 +33,10 @@ const SearchFriend = () => {
   }, []);
 
   // Filter usernames based on userId
-  const filteredUsernames = usernames.filter((username) =>
-    username.username.includes(userId)
-  );
+  const filteredUsernames = usernames.filter((user) => {
+    const regex = new RegExp(userId, "i"); // "i" flag for case-insensitive matching
+    return regex.test(user.username);
+  });
 
   const handleUsernameClick = (uid, event) => {
     event.preventDefault();
@@ -47,8 +48,11 @@ const SearchFriend = () => {
       <h2 style={{ marginLeft: "10px" }}>Usernames: {userId}</h2>
       <ul>
         {filteredUsernames.map(({ uid, username }, index) => (
-          <li key={index} style={{ color: "black" }}>
-            <div onClick={(event) => handleUsernameClick(uid, event)}>
+          <li key={index} style={{ color: "blue" }}>
+            <div
+              onClick={(event) => handleUsernameClick(uid, event)}
+              className="name"
+            >
               {username}
             </div>
           </li>
