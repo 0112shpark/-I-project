@@ -108,6 +108,9 @@ const Mypage = () => {
     }
   };
 
+  const handleMyPage = () => {
+    navigate(`../MyPage?userId=${userData.uid}`);
+  };
   const handleSearchClick = () => {
     navigate(`../SearchFriend?userId=${searchQuery}`);
   };
@@ -148,6 +151,12 @@ const Mypage = () => {
               <div className="button-container">
                 <button className="custom-button" onClick={handleAddFriend}>
                   {isFriendAdded ? "Friend Added" : "Add Friend"}
+                </button>
+                <button
+                  className="custom-button add-friend"
+                  onClick={handleMyPage}
+                >
+                  My Profile
                 </button>
               </div>
             )}
