@@ -169,12 +169,18 @@ img {
 }
 .icon.heart {
   position: relative;
-  top: -5;
-  margin-bottom: 15px;
+  top: 5px;
+  /* margin-bottom: 15px; */
   margin-left: 0;
 }
 .icon.heart:hover {
   color: red;
+}
+.icon.heart.filled {
+  color: red;
+}
+.icon.heart.filled:hover {
+  color: black;
 }
 .weather1 {
   width: 20px;

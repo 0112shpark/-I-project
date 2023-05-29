@@ -89,6 +89,7 @@ const SearchPage = () => {
           setUpdatestat(true);
           setTotalPages(1);
           setError(true);
+          setRender("받아올 수 있는 정보가 없습니다.");
           return Promise.reject(new Error("No items found.")); // Return a rejected Promise to exit the chain
         }
         length = item_weather.length;
@@ -260,7 +261,7 @@ const SearchPage = () => {
     setOption(event.target.value);
   };
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && updatestat) {
       resetweatherinfo();
       navigate(`/search?q=${keyword}&id=${option}`);
       setCurrentPage(1);
@@ -269,10 +270,12 @@ const SearchPage = () => {
   };
 
   const handlesearch = (e) => {
-    resetweatherinfo();
-    navigate(`/search?q=${keyword}&id=${option}`);
-    setCurrentPage(1);
-    setitem([]);
+    if (updatestat) {
+      resetweatherinfo();
+      navigate(`/search?q=${keyword}&id=${option}`);
+      setCurrentPage(1);
+      setitem([]);
+    }
   };
 
   const handlePageClick = (pageNumber) => {
@@ -323,7 +326,7 @@ const SearchPage = () => {
         <button
           key={i}
           className={i === currentPage ? "active" : ""}
-          disabled={error}
+          disabled={error || !updatestat}
           onClick={() => handlePageClick(i)}
         >
           {i}
@@ -395,17 +398,6 @@ const SearchPage = () => {
                     <h2 className="titles">{data.title}</h2>
                     <div className="item-icons">
                       <div className="icons">
-                        {isFavorite(data.contentid) ? (
-                          <AiFillHeart
-                            className="icon heart"
-                            onClick={() => toggleFavorite(data.contentid, data)}
-                          />
-                        ) : (
-                          <AiOutlineHeart
-                            className="icon heart"
-                            onClick={() => toggleFavorite(data.contentid, data)}
-                          />
-                        )}
                         <img
                           className="weather1-stat"
                           src={data.rain}
@@ -430,6 +422,17 @@ const SearchPage = () => {
                           ></img>
                           <div className="humidity"> {data.humid}%</div>
                         </div>
+                        {isFavorite(data.contentid) ? (
+                          <AiFillHeart
+                            className="icon heart filled"
+                            onClick={() => toggleFavorite(data.contentid, data)}
+                          />
+                        ) : (
+                          <AiOutlineHeart
+                            className="icon heart"
+                            onClick={() => toggleFavorite(data.contentid, data)}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -463,7 +466,7 @@ const SearchPage = () => {
           <div className="page-numbers">{renderPageNumbers()}</div>
           <button
             className="arrow"
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || !updatestat}
             onClick={handleNextPageClick}
           >
             ▶
