@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useData } from "../hooks/userData";
 import "./mypage.css";
+import Nav from "./Nav";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHcapNthGtxiWfwLqFJ-lAaixYIHNhDdw",
@@ -56,7 +57,6 @@ const Mypage = () => {
           .then((snapshot) => {
             const userData = snapshot.val();
             setUsername(userData.username);
-            // setPhotoURL(userData.photoUrl);
           })
           .catch((error) => {
             console.log("Error fetching user data:", error);
@@ -122,7 +122,6 @@ const Mypage = () => {
   };
   return (
     <section className="mypage">
-      <div className="overlay1"></div>
       <div className="container1">
         <div className="search-bar">
           <input
@@ -130,13 +129,14 @@ const Mypage = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={handleSearchChange}
+            className="search-input"
           />
-          <p className="search-text" onClick={handleSearchClick}>
+          <button className="search-button" onClick={handleSearchClick}>
             Search
-          </p>
+          </button>
         </div>
         <div className="flex-container">
-          <div className="image-container">
+          <div className="image-container1">
             <img
               className="img"
               src={photoURL} // Updated state variable name
@@ -151,14 +151,22 @@ const Mypage = () => {
                 </button>
               </div>
             )}
-            {username && <p style={{ fontWeight: "bold" }}>{username}</p>}
+            {username && <p className="username">{username}</p>}
           </div>
           <div>
-            <a href="#" onClick={(event) => handleFriendsClick(userId, event)}>
+            <a
+              href="#"
+              onClick={(event) => handleFriendsClick(userId, event)}
+              className="link"
+            >
               My Friends
             </a>
           </div>
-          <a href="#" onClick={(event) => handleFavoritesClick(userId, event)}>
+          <a
+            href="#"
+            onClick={(event) => handleFavoritesClick(userId, event)}
+            className="link"
+          >
             Favorites
           </a>
         </div>

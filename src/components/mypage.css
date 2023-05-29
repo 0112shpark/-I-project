@@ -1,6 +1,5 @@
-
 .container1 {
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 
@@ -18,71 +17,102 @@
   /* background-image: url("https://i.pinimg.com/originals/ac/f7/25/acf7258b8794be7d6909f89a2efadd54.jpg"); */
 }
 .overlay1 {
-  
-    z-index: -1;
-  }
+  z-index: -1;
+}
 
-  
-  .search-bar input {
-    border: none;
-    border-bottom: 2px solid blue; /* Change the color here */
-    padding: 5px;
-    width: 200px;
-    font-size: 16px;
-    z-index: 2; /* Ensure the input is at a higher stacking order */
-  }
-  .search-bar::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: red; /* Change the color here */
-    z-index: -1; /* Lower the stacking order of the line */
-  }
-.img {
-  border-radius: 50%;
-  width: 120px;
+.search-bar {
+  display: flex;
+  align-items: center;
+  max-width: 300px;
   height: 120px;
- 
+  margin: 110px 20px 0px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.search-button {
+  margin-left: 8px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+.search-button:focus {
+  outline: none;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .image-container {
-    margin-right: 10px; /* Adjust the desired spacing */
-  }
-  
-  .info-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .custom-button {
-    background-color: #3498db;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    /* Add any additional styles to customize the button */
-  }
-  
-  .custom-button:hover {
-    background-color: #2980b9;
-  }
-  .search-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 60px;
-    margin-top:100px;
-    position: relative;
-  }
-  
-  .search-text {
-    color: blue; /* Add your desired color */
-    cursor: pointer;
-  }
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-container {
+  flex-grow: 1;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.custom-button {
+  padding: 4px 8px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.custom-button:hover {
+  background-color: #45a049;
+}
+
+.username {
+  font-weight: bold;
+  text-align: center;
+  margin: 7px;
+}
+
+.link {
+  color: #4caf50;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover {
+  color: #45a049;
+}

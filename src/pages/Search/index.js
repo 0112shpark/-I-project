@@ -58,6 +58,22 @@ const SearchPage = () => {
     // 32 => 숙박
     // 38 => 쇼핑
     // 39 => 음식점
+
+    const loadFavorites = () => {
+      const ref = database.ref(`users/${userData.uid}/favorites`);
+      ref.on("value", (snapshot) => {
+        if (snapshot.exists()) {
+          const favorites = snapshot.val();
+          const contentIds = Object.keys(favorites);
+          setFavoriteItems(contentIds);
+        } else {
+          setFavoriteItems([]);
+        }
+      });
+    };
+
+    loadFavorites();
+
     let URL;
     setitem([]);
     setRender("날씨 정보 받아오는 중...");
@@ -249,6 +265,7 @@ const SearchPage = () => {
         .set(itemData);
     }
   };
+
   const isFavorite = (contentId) => {
     return favoriteItems.includes(contentId);
   };

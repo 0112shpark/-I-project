@@ -44,10 +44,14 @@ const Favorites = () => {
       <div className="favorites-list">
         {favorites.map((favorite, index) => (
           <div key={index} className="favorite-item">
-            <img src={favorite.image} alt={favorite.title} />
+            <img
+              src={favorite.image ? favorite.image : "/images/noimage.jpg"}
+              alt={favorite.title}
+            />
             <span>{favorite.title}</span>
             <FaMapMarkerAlt
               style={{ marginLeft: "5px", cursor: "pointer" }}
+              className="map"
               onClick={() => handleMapMarkerClick(favorite.title)}
             />
           </div>

@@ -44,10 +44,6 @@
   height: 120px;
 }
 
-.image-container {
-  margin-right: 10px; /* Adjust the desired spacing */
-}
-
 .info-container {
   display: flex;
   flex-direction: column;
@@ -69,19 +65,7 @@
 .custom-button:hover {
   background-color: #2980b9;
 }
-.search-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 60px;
-  margin-top: 100px;
-  position: relative;
-}
 
-.search-text {
-  color: blue; /* Add your desired color */
-  cursor: pointer;
-}
 .name {
   cursor: pointer;
   text-decoration: underline;

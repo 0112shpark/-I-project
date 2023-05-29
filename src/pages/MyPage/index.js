@@ -7,7 +7,6 @@ import Nav from "../../components/Nav";
 import Mypage from "../../components/mypage";
 
 const MyPage = () => {
-
   const auth = getAuth();
   const navigate = useNavigate();
   const { userData, clearUserData } = useData({});
@@ -25,7 +24,7 @@ const MyPage = () => {
     <>
       <div className="container">
         <Nav />
-        <Mypage /> 
+        <Mypage />
       </div>
     </>
   );

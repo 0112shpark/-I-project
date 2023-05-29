@@ -172,6 +172,7 @@ img {
   top: 5px;
   /* margin-bottom: 15px; */
   margin-left: 0;
+  font-size: 25px;
 }
 .icon.heart:hover {
   color: red;
