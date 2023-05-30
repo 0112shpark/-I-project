@@ -6,14 +6,9 @@ import { useNavigate } from "react-router";
 import { Configuration, OpenAIApi } from "openai";
 import { FaCommentDots } from "react-icons/fa";
 import map_keys from "./sample.json";
-/*const configuration = new Configuration({
-  organization: "org-JbU7cwJQlyRC9PjUIczsSIaO",
-  apiKey: "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",
-});*/
-const { APIKEY } = process.env;
-// console.log(process.env.APIKEY);
+
 const my_apikey = process.env.REACT_APP_OPEN_API_KEY;
-console.log(my_apikey);
+
 //const openai = new OpenAIApi(configuration);
 
 const Chatbot = () => {
