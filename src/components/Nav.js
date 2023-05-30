@@ -101,7 +101,7 @@ const Nav = () => {
               <AiFillHome className="icon" /> Main
             </a>
           </li>
-          <li className="navItem">
+          <div className="navItem">
             {userData && (
               <li className="navItem">
                 <a
@@ -112,7 +112,7 @@ const Nav = () => {
                 </a>
               </li>
             )}
-          </li>
+          </div>
         </>
       );
     }

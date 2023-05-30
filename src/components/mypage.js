@@ -114,7 +114,11 @@ const Mypage = () => {
   const handleSearchClick = () => {
     navigate(`../SearchFriend?userId=${searchQuery}`);
   };
-
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      navigate(`../SearchFriend?userId=${searchQuery}`);
+    }
+  };
   const handleFriendsClick = (uid, event) => {
     event.preventDefault();
     navigate(`/friendslist?userId=${uid}`);
@@ -132,6 +136,7 @@ const Mypage = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
             className="search-input"
           />
           <button className="search-button" onClick={handleSearchClick}>

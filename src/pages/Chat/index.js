@@ -54,6 +54,7 @@ const Chatbot = () => {
   // 자동 스크롤
   useEffect(() => {
     var divdiv = document.getElementById("mess");
+
     divdiv.scrollTop = divdiv.scrollHeight;
   }, [messages]);
 
