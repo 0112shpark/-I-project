@@ -85,21 +85,6 @@
   align-items: center;
 }
 
-.custom-button {
-  padding: 4px 8px;
-  background-color: #4caf50;
-  color: #fff;
-  font-size: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.custom-button:hover {
-  background-color: #45a049;
-}
-
 .username {
   font-weight: bold;
   text-align: center;
@@ -114,4 +99,32 @@
 
 .link:hover {
   color: #45a049;
+}
+.custom-button {
+  padding: 4px 8px;
+  background-color: #ff6b6b;
+  color: #fff;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.custom-button:hover {
+  background-color: #ff4f4f;
+}
+.custom-button.friend-added-button {
+  background-color: #4caf50;
+}
+.custom-button.friend-added-button:hover {
+  background-color: #449d3c;
+}
+
+.add-friend {
+  background-color: #68a1f3;
+}
+
+.add-friend:hover {
+  background-color: #488ae1;
 }

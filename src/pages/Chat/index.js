@@ -341,23 +341,6 @@ const Chatbot = () => {
             ></img>
           )}
         </div>
-        <form onSubmit={handleInputSubmit} className="chatbot-input-container">
-          <input
-            type="text"
-            placeholder="Type your message..."
-            value={inputValue}
-            onChange={handleInputChange}
-            disabled={isloading}
-            className="chatbot-input"
-          />
-          <button
-            type="submit"
-            className="chatbot-send-button"
-            disabled={isloading}
-          >
-            Send
-          </button>
-        </form>
       </div>
     </section>
   );

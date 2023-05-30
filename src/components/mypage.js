@@ -154,7 +154,12 @@ const Mypage = () => {
           <div className="info-container">
             {userId !== userData?.uid && (
               <div className="button-container">
-                <button className="custom-button" onClick={handleAddFriend}>
+                <button
+                  className={`custom-button ${
+                    isFriendAdded ? "friend-added-button" : "add-friend-button"
+                  }`}
+                  onClick={handleAddFriend}
+                >
                   {isFriendAdded ? "Friend Added" : "Add Friend"}
                 </button>
                 <button
@@ -165,7 +170,12 @@ const Mypage = () => {
                 </button>
               </div>
             )}
-            {username && <p className="username">{username}</p>}
+            {username && (
+              <p className="username">
+                UserName: <br></br>
+                {username}
+              </p>
+            )}
           </div>
           <div>
             <a
@@ -173,7 +183,7 @@ const Mypage = () => {
               onClick={(event) => handleFriendsClick(userId, event)}
               className="link"
             >
-              My Friends
+              Friends
             </a>
           </div>
           <a

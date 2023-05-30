@@ -101,7 +101,7 @@ input::placeholder {
 }
 .icon {
   font-size: 18px;
-  color: var(--primaryColor);
+  color: black;
   margin-left: 10px;
 }
 

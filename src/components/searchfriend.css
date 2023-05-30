@@ -49,28 +49,56 @@
   flex-direction: column;
   justify-content: center;
 }
-.custom-button {
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  /* Add any additional styles to customize the button */
+
+.usernames-container {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-.custom-button:hover {
-  background-color: #2980b9;
+.usernames-header {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
 }
 
-.name {
-  cursor: pointer;
-  text-decoration: underline;
+.usernames-header::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background-color: #6c5ce7;
+}
+
+.usernames-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.username-item {
+  margin: 10px;
+}
+
+.username-box {
   display: inline-block;
+  padding: 10px 20px;
+  background-color: #a29bfe;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.name:hover {
-  color: red;
+
+.username-box:hover {
+  background-color: #6c5ce7;
 }

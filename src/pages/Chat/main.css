@@ -127,7 +127,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   padding: 20px;
-  height: 430px;
+  height: 507.4px;
   overflow-y: scroll;
 }
 
@@ -172,32 +172,6 @@
   100% {
     transform: translateY(0);
   }
-}
-
-.chatbot-input {
-  flex: 1;
-  height: 30px;
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.chatbot-send-button {
-  width: 80px;
-  height: 30px;
-  margin-left: 10px;
-  color: #fff;
-  background-color: #3f51b5;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.chatbot-send-button:hover {
-  background-color: #303f9f;
 }
 
 .button {

@@ -44,14 +44,14 @@ const SearchFriend = () => {
   };
 
   return (
-    <div>
-      <h2 style={{ marginLeft: "10px" }}>Usernames: {userId}</h2>
-      <ul>
+    <div className="usernames-container">
+      <h2 className="usernames-header">Search Results for "{userId}"</h2>
+      <ul className="usernames-list">
         {filteredUsernames.map(({ uid, username }, index) => (
-          <li key={index} style={{ color: "blue" }}>
+          <li key={index} className="username-item">
             <div
               onClick={(event) => handleUsernameClick(uid, event)}
-              className="name"
+              className="username-box"
             >
               {username}
             </div>

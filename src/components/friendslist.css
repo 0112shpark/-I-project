@@ -53,26 +53,64 @@
   flex-direction: column;
   justify-content: center;
 }
-.custom-button {
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  /* Add any additional styles to customize the button */
-}
-
-.custom-button:hover {
-  background-color: #2980b9;
-}
 
 .map {
   color: red;
 }
 .map:hover {
   color: blue;
+}
+.friends-container {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.friends-section {
+  margin: 0;
+  text-align: center;
+}
+
+.friends-heading {
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: underline;
+}
+
+.friends-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.friend-item {
+  margin: 8px;
+}
+
+.friend-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #e2f0f3; /* Choose your preferred background color */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.friend-link {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.friend-box:hover {
+  background-color: #c1dee4; /* Choose your preferred hover background color */
+}
+
+.friend-link:hover {
+  color: #007bff; /* Choose your preferred hover text color */
 }

@@ -7,6 +7,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -24,6 +25,15 @@ const Favorites = () => {
           const favoritesList = Object.values(favoritesData);
           setFavorites(favoritesList);
         }
+        const snapshot1 = await firebase
+          .database()
+          .ref(`users/${userId}/username`)
+          .once("value");
+        const users = snapshot1.val();
+        if (users) {
+          const val = Object.values(users);
+          setUsername(val);
+        }
       } catch (error) {
         console.log("Error fetching favorites:", error);
       }
@@ -40,20 +50,22 @@ const Favorites = () => {
 
   return (
     <div className="favorites-container">
-      <h2 style={{ marginLeft: "10px" }}>Favorites: </h2>
+      <h2 className="favorites-heading">"{username}'s Favorites:</h2>
       <div className="favorites-list">
         {favorites.map((favorite, index) => (
           <div key={index} className="favorite-item">
-            <img
-              src={favorite.image ? favorite.image : "/images/noimage.jpg"}
-              alt={favorite.title}
-            />
-            <span>{favorite.title}</span>
-            <FaMapMarkerAlt
-              style={{ marginLeft: "5px", cursor: "pointer" }}
-              className="map"
-              onClick={() => handleMapMarkerClick(favorite.title)}
-            />
+            <div className="favorite-box">
+              <img
+                src={favorite.image ? favorite.image : "/images/noimage.jpg"}
+                alt={favorite.title}
+                className="favorite-image"
+              />
+              <span className="favorite-title">{favorite.title}</span>
+              <FaMapMarkerAlt
+                className="map-marker"
+                onClick={() => handleMapMarkerClick(favorite.title)}
+              />
+            </div>
           </div>
         ))}
       </div>

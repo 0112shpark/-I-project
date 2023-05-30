@@ -41,44 +41,62 @@
   gap: 10px;
 }
 
-.custom-button {
-  padding: 4px 8px;
-  background-color: #ff6b6b;
-  color: #fff;
-  font-size: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.custom-button:hover {
-  background-color: #ff4f4f;
-}
-.add-friend {
-  background-color: #68a1f3;
-}
-
-.add-friend:hover {
-  background-color: #488ae1;
-}
 .favorites-container {
-  height: 400px; /* Set the desired height */
-  overflow-y: auto; /* Enable vertical scrolling */
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.favorites-heading {
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: underline;
 }
 
 .favorites-list {
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .favorite-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  margin: 10px;
 }
 
-.favorite-item img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+.favorite-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #e2f0f3; /* Choose your preferred background color */
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.favorite-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.favorite-title {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.map-marker {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.map-marker:hover {
+  color: #007bff; /* Choose your preferred hover color */
 }

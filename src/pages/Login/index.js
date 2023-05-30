@@ -260,7 +260,6 @@ const Login = () => {
       <div className="choose-form">
         <div className="title">
           <h1 className="title__h1">
-            (환영문구 추천)
             <br />
           </h1>
         </div>
