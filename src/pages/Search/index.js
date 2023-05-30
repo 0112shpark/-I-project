@@ -11,6 +11,7 @@ import { weather } from "../../api/weather";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import { useData } from "../../hooks/userData";
+import { Link } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHcapNthGtxiWfwLqFJ-lAaixYIHNhDdw",
@@ -412,7 +413,13 @@ const SearchPage = () => {
                     />
                   )}
                   <div className="item-details">
-                    <h2 className="titles">{data.title}</h2>
+                    <h2 className="titles">
+                      <Link
+                        to={`/chat?contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`}
+                      >
+                        {data.title}
+                      </Link>
+                    </h2>
                     <div className="item-icons">
                       <div className="icons">
                         <img
