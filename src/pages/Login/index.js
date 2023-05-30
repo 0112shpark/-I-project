@@ -182,21 +182,20 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (event) => {
-    localStorage.removeItem("userData");
-    clearUserData();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const name = event.target.name;
     if (name === "signup") {
       setisSignUP(true);
-      SignUp(Email, Password, UserName, PhotoUrl).then((result) => {
+      try {
+        await SignUp(Email, Password, UserName, PhotoUrl);
         console.log("Email:", Email);
         console.log("Photo:", PhotoUrl);
         console.log("Password:", Password);
         console.log("Username:", UserName);
-        //  setUserData(result.user);
-        //     localStorage.setItem("userData", JSON.stringify(result.user));
-      });
+      } catch (error) {
+        console.error(error);
+      }
     } else if (name === "login") {
       EmailLogin(Email, Password);
       setisSignUP(false);

@@ -220,14 +220,14 @@ const Chatbot = () => {
     const promptedString =
       "언제 방문하는 게 가장 좋을까? 해요체로 간략하게 내가 앞에서 준 정보를 바탕으로 너의 생각을 답해줘.";
 
-    // setMessages([
-    //   ...messages,
-    //   {
-    //     id: messages.length + 1,
-    //     text: "언제 방문하는 게 가장 좋을까?",
-    //     isBot: 0,
-    //   },
-    // ]);
+    setMessages([
+      ...messages,
+      {
+        id: messages.length + 3,
+        text: "언제 방문하는 게 가장 좋을까?",
+        isBot: 0,
+      },
+    ]);
     console.log("chatbot sent msg1");
 
     setIsloading(true);
@@ -253,14 +253,14 @@ const Chatbot = () => {
     const promptedString =
       "이곳의 매력에 대해 어떻게 생각해? 해요체로 간략하게 내가 앞에서 준 정보를 바탕으로 너의 생각을 답해줘.";
 
-    // setMessages([
-    //   ...messages,
-    //   {
-    //     id: messages.length + 4,
-    //     text: "이곳의 매력에 대해 어떻게 생각해?",
-    //     isBot: 0,
-    //   },
-    // ]);
+    setMessages([
+      ...messages,
+      {
+        id: messages.length + 4,
+        text: "이곳의 매력에 대해 어떻게 생각해?",
+        isBot: 0,
+      },
+    ]);
     console.log("chatbot sent msg1");
 
     setIsloading(true);
