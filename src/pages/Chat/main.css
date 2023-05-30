@@ -139,6 +139,7 @@
   color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   animation: fade-in 0.5s ease-in-out;
+  word-wrap: break-word;
 }
 
 @keyframes fade-in {
@@ -200,7 +201,7 @@
 }
 
 .button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4caf50; /* Green */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -210,34 +211,39 @@
   font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
-  }
-  
-  .button1 {
+}
+
+.button1 {
   background-color: white;
   color: black;
-  border: 2px solid #4CAF50;
-  }
-  
-  .button2 {
+  border: 2px solid #4caf50;
+}
+
+.button2 {
   background-color: white;
   color: black;
-  border: 2px solid #008CBA;
-  }
-  
-  .button3 {
+  border: 2px solid #008cba;
+}
+
+.button3 {
   background-color: white;
   color: black;
   border: 2px solid #f44336;
-  }
-  
-  .button4 {
+}
+
+.button4 {
   background-color: white;
   color: black;
   border: 2px solid #e7e7e7;
-  }
-  
-  .button5 {
+}
+
+.button5 {
   background-color: white;
   color: black;
   border: 2px solid #555555;
-  }
+}
+
+.loading-icon {
+  position: relative;
+  width: 40px;
+}

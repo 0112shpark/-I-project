@@ -13,7 +13,11 @@ const my_apikey = process.env.REACT_APP_OPEN_API_KEY;
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
-    { id: 1, text: "여행지 안내를 시작할게요!", isBot: 1 },
+    {
+      id: 1,
+      text: "여행지 안내를 시작할게요! \n 잠시만 기다려주세요.",
+      isBot: 1,
+    },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [buttonsOn, setButtons] = useState(false);
@@ -36,11 +40,13 @@ const Chatbot = () => {
       .then((retInfo) => {
         console.log("Fetched string:", retInfo);
         //setInputValue(retInfo);
+        setIsloading(true);
         createCompletion({}, retInfo).then((response_) => {
-          setMessages([...messages]);
           setMessages([
-            { id: messages.length + 2, text: response_.text, isBot: 1 },
+            ...messages,
+            { id: messages.length + 5, text: response_.text, isBot: 1 },
           ]);
+          setIsloading(false);
           setReceivedState(true);
           setButtons(true);
           console.log(response_.text);
@@ -214,14 +220,14 @@ const Chatbot = () => {
     const promptedString =
       "언제 방문하는 게 가장 좋을까? 해요체로 간략하게 내가 앞에서 준 정보를 바탕으로 너의 생각을 답해줘.";
 
-    setMessages([
-      ...messages,
-      {
-        id: messages.length + 1,
-        text: "언제 방문하는 게 가장 좋을까?",
-        isBot: 0,
-      },
-    ]);
+    // setMessages([
+    //   ...messages,
+    //   {
+    //     id: messages.length + 1,
+    //     text: "언제 방문하는 게 가장 좋을까?",
+    //     isBot: 0,
+    //   },
+    // ]);
     console.log("chatbot sent msg1");
 
     setIsloading(true);
@@ -232,11 +238,11 @@ const Chatbot = () => {
     setMessages([
       ...messages,
       {
-        id: messages.length + 1,
+        id: messages.length + 3,
         text: "언제 방문하는 게 가장 좋을까?",
         isBot: 0,
       },
-      { id: messages.length + 2, text: response.text, isBot: 1 },
+      { id: messages.length + 3, text: response.text, isBot: 1 },
     ]);
 
     setInputValue("");
@@ -247,14 +253,14 @@ const Chatbot = () => {
     const promptedString =
       "이곳의 매력에 대해 어떻게 생각해? 해요체로 간략하게 내가 앞에서 준 정보를 바탕으로 너의 생각을 답해줘.";
 
-    setMessages([
-      ...messages,
-      {
-        id: messages.length + 1,
-        text: "이곳의 매력에 대해 어떻게 생각해?",
-        isBot: 0,
-      },
-    ]);
+    // setMessages([
+    //   ...messages,
+    //   {
+    //     id: messages.length + 4,
+    //     text: "이곳의 매력에 대해 어떻게 생각해?",
+    //     isBot: 0,
+    //   },
+    // ]);
     console.log("chatbot sent msg1");
 
     setIsloading(true);
@@ -265,11 +271,11 @@ const Chatbot = () => {
     setMessages([
       ...messages,
       {
-        id: messages.length + 1,
+        id: messages.length + 4,
         text: "이곳의 매력에 대해 어떻게 생각해?",
         isBot: 0,
       },
-      { id: messages.length + 2, text: response.text, isBot: 1 },
+      { id: messages.length + 4, text: response.text, isBot: 1 },
     ]);
 
     setInputValue("");
@@ -305,26 +311,35 @@ const Chatbot = () => {
               }}
             >
               {message.text}
-              {receivedMsgOk && buttonsOn && message.isBot && (
-                <div className="button-container">
-                  <button
-                    className="button button1"
-                    onClick={handleButtonClicked1}
-                  >
-                    <b>언제 방문하는 게 가장 좋을까?</b>
-                  </button>
-                  <br></br>
-                  <button
-                    className="button button2"
-                    onClick={handleButtonClicked2}
-                  >
-                    <b>이곳의 매력에 대해 어떻게 생각해?</b>
-                  </button>
-                </div>
-              )}
+              {receivedMsgOk &&
+                buttonsOn &&
+                message.id !== 1 &&
+                message.isBot && (
+                  <div className="button-container">
+                    <button
+                      className="button button1"
+                      onClick={handleButtonClicked1}
+                    >
+                      <b>언제 방문하는 게 가장 좋을까?</b>
+                    </button>
+                    <br></br>
+                    <button
+                      className="button button2"
+                      onClick={handleButtonClicked2}
+                    >
+                      <b>이곳의 매력에 대해 어떻게 생각해?</b>
+                    </button>
+                  </div>
+                )}
             </div>
           ))}
-          {isloading && <FaCommentDots className="icon"></FaCommentDots>}
+          {isloading && (
+            <img
+              src="/../images/pencil.gif"
+              alt="writing"
+              className="loading-icon"
+            ></img>
+          )}
         </div>
         <form onSubmit={handleInputSubmit} className="chatbot-input-container">
           <input
@@ -335,7 +350,11 @@ const Chatbot = () => {
             disabled={isloading}
             className="chatbot-input"
           />
-          <button type="submit" className="chatbot-send-button">
+          <button
+            type="submit"
+            className="chatbot-send-button"
+            disabled={isloading}
+          >
             Send
           </button>
         </form>
