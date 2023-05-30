@@ -4,7 +4,7 @@ import { useData } from "../../hooks/userData";
 import { useNavigate } from "react-router";
 import { Configuration, OpenAIApi } from "openai";
 import { FaCommentDots } from "react-icons/fa";
-const my_apikey = process.env.REACT_APP_OPENAI_API_KEY;
+const my_apikey = process.env.REACT_APP_OPEN_API_KEY;
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
