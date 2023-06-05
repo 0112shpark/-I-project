@@ -110,6 +110,7 @@ img {
   border-radius: 4px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   height: 200px;
+  overflow: auto;
 }
 
 .firstimage {
@@ -164,13 +165,27 @@ img {
   /* flex: 1; */
   /* gap: 6px; */
 }
+.likes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
 .weather-wrapper {
   display: flex;
+}
+.icon.people {
+  position: relative;
+  top: 5px;
+  margin-left: 0;
+  font-size: 25px;
+}
+.icon.people:hover {
+  color: burlywood;
 }
 .icon.heart {
   position: relative;
   top: 5px;
-  /* margin-bottom: 15px; */
   margin-left: 0;
   font-size: 25px;
 }

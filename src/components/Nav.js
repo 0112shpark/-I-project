@@ -54,9 +54,14 @@ const Nav = () => {
           </li>
           {userData && (
             <li className="navItem">
-              <a href={`../MyPage?userId=${userData.uid}`} className="navLink">
+              <div
+                onClick={() => {
+                  navigate(`../MyPage?userId=${userData.uid}`);
+                }}
+                className="navLink"
+              >
                 <CgProfile className="icon" /> MY Page
-              </a>
+              </div>
             </li>
           )}
         </>
@@ -71,9 +76,14 @@ const Nav = () => {
           </li>
           {userData && (
             <li className="navItem">
-              <a href={`../MyPage?userId=${userData.uid}`} className="navLink">
+              <div
+                onClick={() => {
+                  navigate(`../MyPage?userId=${userData.uid}`);
+                }}
+                className="navLink"
+              >
                 <CgProfile className="icon" /> MY Page
-              </a>
+              </div>
             </li>
           )}
         </>
@@ -104,12 +114,14 @@ const Nav = () => {
           <div className="navItem">
             {userData && (
               <li className="navItem">
-                <a
-                  href={`../MyPage?userId=${userData.uid}`}
+                <div
+                  onClick={() => {
+                    navigate(`../MyPage?userId=${userData.uid}`);
+                  }}
                   className="navLink"
                 >
                   <CgProfile className="icon" /> MY Page
-                </a>
+                </div>
               </li>
             )}
           </div>

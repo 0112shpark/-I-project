@@ -58,11 +58,14 @@
   height: 120px;
 }
 .image-container {
-    margin-right: 10px; /* Adjust the desired spacing */
-  }
-  
-  .info-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  margin-right: 10px; /* Adjust the desired spacing */
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.go {
+  cursor: pointer;
+}

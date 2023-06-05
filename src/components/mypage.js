@@ -14,6 +14,8 @@ import { useData } from "../hooks/userData";
 import "./mypage.css";
 import Nav from "./Nav";
 
+import { IoIosArrowBack } from "react-icons/io";
+import Goback from "./Goback";
 const firebaseConfig = {
   apiKey: "AIzaSyAHcapNthGtxiWfwLqFJ-lAaixYIHNhDdw",
   authDomain: "jaban-7c8c2.firebaseapp.com",
@@ -183,13 +185,14 @@ const Mypage = () => {
     event.preventDefault();
     navigate(`/favorites?userId=${uid}`);
   };
+
   return (
-    <section className="mypage">
+    <div className="mypage">
       <div className="container1">
         <div className="search-bar">
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search for friends names..."
             value={searchQuery}
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
@@ -208,17 +211,20 @@ const Mypage = () => {
             />
           </div>
           <div className="change-picture">
-            {userId == userData?.uid && (
+            {userId === userData?.uid && (
               <div className="upload-container">
-                <input
-                  type="file"
-                  onChange={handleChange}
-                  accept="image/*"
-                  className="file-input"
-                />
+                <label className="file-input-label">
+                  <input
+                    type="file"
+                    onChange={handleChange}
+                    accept="image/*"
+                    className="file-input"
+                  />
+                  <span className="file-input-text">Change photo</span>
+                </label>
                 {profilePicture && (
                   <button
-                    className={`custom-button`}
+                    className="custom-button"
                     onClick={handleChangePicture}
                   >
                     Change Profile Picture
@@ -227,6 +233,7 @@ const Mypage = () => {
               </div>
             )}
           </div>
+
           <div className="info-container">
             {userId !== userData?.uid && (
               <div className="button-container">
@@ -271,7 +278,7 @@ const Mypage = () => {
           </a>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

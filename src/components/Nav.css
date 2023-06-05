@@ -78,6 +78,7 @@ li {
   color: var(--textColor);
   font-size: 0.9rem;
   font-weight: 600;
+  cursor: pointer;
 }
 .navLink:hover {
   color: var(--PrimaryColor);

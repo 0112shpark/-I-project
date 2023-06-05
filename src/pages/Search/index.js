@@ -3,7 +3,7 @@ import Nav from "../../components/Nav";
 import "./main.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HiSearch } from "react-icons/hi";
-import { BsFillSunFill } from "react-icons/bs";
+import { BsFillPeopleFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import { FiLoader } from "react-icons/fi";
@@ -12,6 +12,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import { useData } from "../../hooks/userData";
 import { Link } from "react-router-dom";
+import Modalopen from "../../components/modalopen";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHcapNthGtxiWfwLqFJ-lAaixYIHNhDdw",
@@ -35,6 +36,7 @@ const SearchPage = () => {
   const [option, setOption] = useState("");
   const [totalPages, setTotalPages] = useState(0);
   const [isloading, setIsloading] = useState(false);
+  const [modal, setModal] = useState(false);
   const navigate = useNavigate();
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -517,64 +519,28 @@ const SearchPage = () => {
                           ></img>
                           <div className="humidity"> {data.humid}%</div>
                         </div>
-                        {isFavorite(data.contentid) ? (
-                          <AiFillHeart
-                            className="icon heart filled"
-                            onClick={() => toggleFavorite(data.contentid, data)}
-                          />
-                        ) : (
-                          <AiOutlineHeart
-                            className="icon heart"
-                            onClick={() => toggleFavorite(data.contentid, data)}
-                          />
-                        )}
-
-                        <div className="likedfriends">
-                          {friendFavorites.length > 0 && (
-                            <span style={{ fontSize: "12px" }}>
-                              {friendFavorites
-                                .filter((friend) =>
-                                  Object.values(friend.favoriteIds).includes(
-                                    data.contentid
-                                  )
-                                )
-                                .slice(0, 2)
-                                .map((friend, index) => (
-                                  <React.Fragment key={friend.friendId}>
-                                    {friend.username}
-                                    {index !== 1 &&
-                                      friendFavorites.filter((f) =>
-                                        Object.values(f.favoriteIds).includes(
-                                          data.contentid
-                                        )
-                                      ).length > 1 &&
-                                      ", "}
-                                  </React.Fragment>
-                                ))}
-                              {friendFavorites.filter((friend) =>
-                                Object.values(friend.favoriteIds).includes(
-                                  data.contentid
-                                )
-                              ).length > 2 && (
-                                <a
-                                  onClick={() =>
-                                    handleOthersClick(
-                                      data.contentid,
-                                      friendFavorites
-                                        .filter((friend) =>
-                                          Object.values(
-                                            friend.favoriteIds
-                                          ).includes(data.contentid)
-                                        )
-                                        .map((friend) => friend.username)
-                                    )
-                                  }
-                                >
-                                  , and others
-                                </a>
-                              )}
-                            </span>
+                        <div className="likes">
+                          {isFavorite(data.contentid) ? (
+                            <AiFillHeart
+                              className="icon heart filled"
+                              onClick={() =>
+                                toggleFavorite(data.contentid, data)
+                              }
+                            />
+                          ) : (
+                            <AiOutlineHeart
+                              className="icon heart"
+                              onClick={() =>
+                                toggleFavorite(data.contentid, data)
+                              }
+                            />
                           )}
+                          <BsFillPeopleFill
+                            className="icon people"
+                            onClick={() => {
+                              setModal(true);
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -596,6 +562,7 @@ const SearchPage = () => {
               ></img>
             </div>
           )}
+          {modal && <Modalopen setModal={setModal} />}
         </div>
 
         <div className="pagination">

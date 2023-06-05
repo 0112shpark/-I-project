@@ -5,6 +5,7 @@ import { useData } from "../../hooks/userData";
 import "./main.css";
 import Nav from "../../components/Nav";
 import Friendslist from "../../components/friendslist";
+import Goback from "../../components/Goback";
 
 const FriendsList = () => {
   const auth = getAuth();
@@ -23,6 +24,7 @@ const FriendsList = () => {
   return (
     <div className="container">
       <Nav />
+      <Goback />
       <Friendslist />
     </div>
   );

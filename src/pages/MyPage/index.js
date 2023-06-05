@@ -5,6 +5,7 @@ import { useData } from "../../hooks/userData";
 import "./main.css";
 import Nav from "../../components/Nav";
 import Mypage from "../../components/mypage";
+import Goback from "../../components/Goback";
 
 const MyPage = () => {
   const auth = getAuth();
@@ -24,6 +25,7 @@ const MyPage = () => {
     <>
       <div className="container">
         <Nav />
+        <Goback />
         <Mypage />
       </div>
     </>

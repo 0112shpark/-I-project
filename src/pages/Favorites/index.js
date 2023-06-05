@@ -5,9 +5,9 @@ import { useData } from "../../hooks/userData";
 import "./main.css";
 import Nav from "../../components/Nav";
 import Favorite from "../../components/favorites";
+import Goback from "../../components/Goback";
 
 const Favorites = () => {
-
   const auth = getAuth();
   const navigate = useNavigate();
   const { userData, clearUserData } = useData({});
@@ -25,7 +25,8 @@ const Favorites = () => {
     <>
       <div className="container">
         <Nav />
-        <Favorite /> 
+        <Goback />
+        <Favorite />
       </div>
     </>
   );

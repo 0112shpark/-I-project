@@ -5,9 +5,9 @@ import { useData } from "../../hooks/userData";
 import "./main.css";
 import Nav from "../../components/Nav";
 import Searchfriend from "../../components/searchfriend";
+import Goback from "../../components/Goback";
 
 const SearchFriend = () => {
-
   const auth = getAuth();
   const navigate = useNavigate();
   const { userData, clearUserData } = useData({});
@@ -25,7 +25,8 @@ const SearchFriend = () => {
     <>
       <div className="container">
         <Nav />
-        <Searchfriend /> 
+        <Goback />
+        <Searchfriend />
       </div>
     </>
   );
