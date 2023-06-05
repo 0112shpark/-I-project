@@ -3,7 +3,13 @@ import video from "../videos/korea.mp4";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { getDatabase, ref, update } from "firebase/database";
+import {
+  getStorage,
+  ref as stRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import { useData } from "../hooks/userData";
 import "./mypage.css";
 import Nav from "./Nav";
@@ -24,10 +30,12 @@ const database = firebase.database();
 
 const Mypage = () => {
   const { userData } = useData({});
+  const [percent, setPercent] = useState(0);
   const [username, setUsername] = useState("");
   const [isFriendAdded, setIsFriendAdded] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [photoURL, setPhotoURL] = useState("");
+  const [photo, setPhotoURL] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
@@ -35,7 +43,18 @@ const Mypage = () => {
 
   useEffect(() => {
     if (userData) {
-      setPhotoURL(userData.photoURL);
+      const userRef = database.ref(`users/${userId}`);
+      userRef
+        .once("value")
+        .then((snapshot) => {
+          const user = snapshot.val();
+          if (user && user.photoUrl) {
+            setPhotoURL(user.photoUrl);
+          }
+        })
+        .catch((error) => {
+          console.log("Error fetching user data:", error);
+        });
 
       if (userId) {
         const friendRef = database.ref(
@@ -68,7 +87,44 @@ const Mypage = () => {
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
+  const handleChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePicture(file);
+  };
 
+  const handleChangePicture = () => {
+    if (profilePicture) {
+      const db = getDatabase();
+      const storage = getStorage();
+      const storageRef = stRef(storage, `photos/${userId}`);
+      const uploadTask = uploadBytesResumable(storageRef, profilePicture);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const percent = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setPercent(percent);
+        },
+        (err) => console.log(err),
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((photoURL) => {
+              console.log("Photo download URL:", photoURL);
+
+              const userRef = ref(db, `users/${userId}`);
+              update(userRef, { photoUrl: photoURL });
+              window.location.reload();
+            })
+
+            .catch((error) => {
+              console.log("Error getting photo download URL:", error);
+            });
+        }
+      );
+    }
+  };
   const handleAddFriend = () => {
     if (isFriendAdded) {
       // Remove friend from Firebase database
@@ -147,9 +203,29 @@ const Mypage = () => {
           <div className="image-container1">
             <img
               className="img"
-              src={photoURL} // Updated state variable name
-              alt={userData && userData.displayName}
+              src={photo}
+              alt={userId && userId.displayName}
             />
+          </div>
+          <div className="change-picture">
+            {userId == userData?.uid && (
+              <div className="upload-container">
+                <input
+                  type="file"
+                  onChange={handleChange}
+                  accept="image/*"
+                  className="file-input"
+                />
+                {profilePicture && (
+                  <button
+                    className={`custom-button`}
+                    onClick={handleChangePicture}
+                  >
+                    Change Profile Picture
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <div className="info-container">
             {userId !== userData?.uid && (

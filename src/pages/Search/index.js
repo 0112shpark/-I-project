@@ -25,7 +25,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-
+const friendFavorites = [];
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
   const { weatherinfo, weatherApiCall, resetweatherinfo } = weather({});
@@ -42,12 +42,15 @@ const SearchPage = () => {
   let query = useQuery();
   const searchTerm = query.get("q");
   const contentid = query.get("id");
+  const userId = query.get("userId");
   const [currentPage, setCurrentPage] = useState(1);
   const containerRef = useRef(null);
   const [render, setRender] = useState("");
   const [updatestat, setUpdatestat] = useState(false);
   const [favoriteItems, setFavoriteItems] = useState([]);
   const [error, setError] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupContent, setPopupContent] = useState(null);
 
   useEffect(() => {
     //contentstypeID
@@ -73,8 +76,43 @@ const SearchPage = () => {
       });
     };
 
-    loadFavorites();
+    const likedByFriends = () => {
+      const ref = database.ref(`users/${userData.uid}/friends`);
+      ref.on("value", (snapshot) => {
+        if (snapshot.exists()) {
+          const friends = snapshot.val();
+          const friendIds = Object.keys(friends);
 
+          friendIds.forEach((friendId) => {
+            const favoritesRef = database.ref(`users/${friendId}/favorites`);
+            const usernameRef = database.ref(`users/${friendId}/username`);
+
+            usernameRef.once("value", (usernameSnapshot) => {
+              if (usernameSnapshot.exists()) {
+                const username = usernameSnapshot.val();
+                favoritesRef.once("value", (favoritesSnapshot) => {
+                  if (favoritesSnapshot.exists()) {
+                    const favorites = favoritesSnapshot.val();
+                    const favoriteIds = Object.keys(favorites);
+                    friendFavorites.push({ friendId, favoriteIds, username });
+                  }
+                });
+              }
+            });
+          });
+
+          console.log(friendFavorites);
+          setTimeout(() => {
+            console.log(
+              "Friend Ids, Favorite Ids, and Usernames:",
+              friendFavorites
+            );
+          }, 1000);
+        }
+      });
+    };
+    loadFavorites();
+    likedByFriends();
     let URL;
     setitem([]);
     setRender("날씨 정보 받아오는 중...");
@@ -311,7 +349,40 @@ const SearchPage = () => {
     resetweatherinfo();
     containerRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
+  const handleOthersClick = (contentId, username) => {
+    setShowPopup(true);
+    setPopupContent(
+      <div className="popup">
+        <span
+          style={{
+            fontSize: "15px",
+            fontWeight: "bold",
+            verticalAlign: "middle",
+          }}
+        >
+          {Array.isArray(username)
+            ? username.map((name) => (
+                <React.Fragment key={name}>
+                  {name}
+                  <br />
+                </React.Fragment>
+              ))
+            : username}
+        </span>
+        <p></p>
+        <button
+          onClick={() => setShowPopup(false)}
+          style={{
+            position: "absolute",
+            bottom: "10px",
+            right: "10px",
+          }}
+        >
+          Close
+        </button>
+      </div>
+    );
+  };
   const handleNextPageClick = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -457,6 +528,54 @@ const SearchPage = () => {
                             onClick={() => toggleFavorite(data.contentid, data)}
                           />
                         )}
+
+                        <div className="likedfriends">
+                          {friendFavorites.length > 0 && (
+                            <span style={{ fontSize: "12px" }}>
+                              {friendFavorites
+                                .filter((friend) =>
+                                  Object.values(friend.favoriteIds).includes(
+                                    data.contentid
+                                  )
+                                )
+                                .slice(0, 2)
+                                .map((friend, index) => (
+                                  <React.Fragment key={friend.friendId}>
+                                    {friend.username}
+                                    {index !== 1 &&
+                                      friendFavorites.filter((f) =>
+                                        Object.values(f.favoriteIds).includes(
+                                          data.contentid
+                                        )
+                                      ).length > 1 &&
+                                      ", "}
+                                  </React.Fragment>
+                                ))}
+                              {friendFavorites.filter((friend) =>
+                                Object.values(friend.favoriteIds).includes(
+                                  data.contentid
+                                )
+                              ).length > 2 && (
+                                <a
+                                  onClick={() =>
+                                    handleOthersClick(
+                                      data.contentid,
+                                      friendFavorites
+                                        .filter((friend) =>
+                                          Object.values(
+                                            friend.favoriteIds
+                                          ).includes(data.contentid)
+                                        )
+                                        .map((friend) => friend.username)
+                                    )
+                                  }
+                                >
+                                  , and others
+                                </a>
+                              )}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -497,6 +616,7 @@ const SearchPage = () => {
           </button>
         </div>
       </div>
+      {showPopup && <div className="popup-container">{popupContent}</div>}
     </>
   );
 };

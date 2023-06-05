@@ -60,6 +60,7 @@ const Favorites = () => {
                 alt={favorite.title}
                 className="favorite-image"
               />
+
               <span className="favorite-title">{favorite.title}</span>
               <FaMapMarkerAlt
                 className="map-marker"

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, set } from "firebase/database";
-
+import { getDatabase, ref, set, get } from "firebase/database";
+import {
+  getStorage,
+  ref as stRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import "./Login.css";
 import {
   GoogleAuthProvider,
@@ -112,29 +117,103 @@ const Login = () => {
     }
   };
 
+  const downloadImage = async (url) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return blob;
+  };
   /* ===========================
       Events
   ============================ */
 
   const handleAuth = () => {
+    const db = getDatabase();
+
+    const checkEmailExists = async (email) => {
+      try {
+        const snapshot = await get(ref(db, "users"));
+        const users = snapshot.val();
+        const userWithEmail = Object.values(users).find(
+          (user) => user.email === email
+        );
+        return userWithEmail;
+      } catch (error) {
+        throw error;
+      }
+    };
+
     signInWithPopup(auth, provider)
       .then((result) => {
-        //providerData[0]에 email, displayName으로 저장되어있음
-
         console.log("user-email:", result.user.providerData[0].email);
         console.log("user-name:", result.user.displayName);
 
+        const email = result.user.providerData[0].email;
+
         setUserData(result.user);
         localStorage.setItem("userData", JSON.stringify(result.user));
-        const userId = result.user.uid;
-        const db = getDatabase();
-        set(ref(db, "users/" + userId), {
-          username: result.user.displayName,
-          email: result.user.providerData[0].email,
-          photoURL: result.user.photoURL,
-          friends: "0",
-        });
-        set(ref(db, "friends/" + userId));
+
+        checkEmailExists(email)
+          .then((existingUser) => {
+            if (existingUser) {
+              // User with the same email already exists in the database
+              console.log(
+                "User with the same email already exists:",
+                existingUser
+              );
+              // Proceed with login or any other necessary actions
+            } else {
+              // User with the same email does not exist in the database
+              // Proceed with setting the database and other actions
+
+              const userId = result.user.uid;
+
+              const storage = getStorage();
+              const storageRef = stRef(storage, `photos/${userId}`);
+
+              const downloadImage = async (url) => {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                return blob;
+              };
+
+              downloadImage(result.user.photoURL)
+                .then((blob) => {
+                  console.log(blob);
+                  uploadBytes(storageRef, blob)
+                    .then((snapshot) => {
+                      console.log("Photo uploaded successfully");
+
+                      getDownloadURL(snapshot.ref)
+                        .then((photoURL) => {
+                          console.log("Photo download URL:", photoURL);
+
+                          set(ref(db, "users/" + userId), {
+                            username: result.user.displayName,
+                            email: email,
+                            photoUrl: photoURL,
+                            friends: "0",
+                          });
+                          set(ref(db, "friends/" + userId));
+                        })
+                        .catch((error) => {
+                          console.log(
+                            "Error getting photo download URL:",
+                            error
+                          );
+                        });
+                    })
+                    .catch((error) => {
+                      console.log("Error uploading photo:", error);
+                    });
+                })
+                .catch((error) => {
+                  console.log("Error downloading photo:", error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.error("Error checking email existence:", error);
+          });
       })
       .catch((error) => console.error(error));
   };
