@@ -26,7 +26,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const friendFavorites = [];
+let friendFavorites = [];
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
   const { weatherinfo, weatherApiCall, resetweatherinfo } = weather({});
@@ -37,6 +37,8 @@ const SearchPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [isloading, setIsloading] = useState(false);
   const [modal, setModal] = useState(false);
+  const [usernames, setUsernames] = useState([]);
+
   const navigate = useNavigate();
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -51,8 +53,6 @@ const SearchPage = () => {
   const [updatestat, setUpdatestat] = useState(false);
   const [favoriteItems, setFavoriteItems] = useState([]);
   const [error, setError] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupContent, setPopupContent] = useState(null);
 
   useEffect(() => {
     //contentstypeID
@@ -117,6 +117,8 @@ const SearchPage = () => {
     likedByFriends();
     let URL;
     setitem([]);
+    setUsernames([]);
+    friendFavorites = [];
     setRender("날씨 정보 받아오는 중...");
     setUpdatestat(false);
     setError(false);
@@ -311,6 +313,11 @@ const SearchPage = () => {
     return favoriteItems.includes(contentId);
   };
 
+  const gotoChat = (data) => {
+    navigate(
+      `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
+    );
+  };
   const handleinput = (event) => {
     const value = event.target.value;
     setKeyword(value);
@@ -351,40 +358,7 @@ const SearchPage = () => {
     resetweatherinfo();
     containerRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  const handleOthersClick = (contentId, username) => {
-    setShowPopup(true);
-    setPopupContent(
-      <div className="popup">
-        <span
-          style={{
-            fontSize: "15px",
-            fontWeight: "bold",
-            verticalAlign: "middle",
-          }}
-        >
-          {Array.isArray(username)
-            ? username.map((name) => (
-                <React.Fragment key={name}>
-                  {name}
-                  <br />
-                </React.Fragment>
-              ))
-            : username}
-        </span>
-        <p></p>
-        <button
-          onClick={() => setShowPopup(false)}
-          style={{
-            position: "absolute",
-            bottom: "10px",
-            right: "10px",
-          }}
-        >
-          Close
-        </button>
-      </div>
-    );
-  };
+
   const handleNextPageClick = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -477,18 +451,28 @@ const SearchPage = () => {
                       src={data.firstimage}
                       className="firstimage"
                       alt={data.title}
+                      onClick={() => {
+                        navigate(
+                          `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
+                        );
+                      }}
                     />
                   ) : (
                     <img
                       src="/images/noimage.jpg"
                       className="firstimage"
                       alt={data.title}
+                      onClick={() => {
+                        navigate(
+                          `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
+                        );
+                      }}
                     />
                   )}
                   <div className="item-details">
                     <h2 className="titles">
                       <Link
-                        to={`/chat?contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`}
+                        to={`/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`}
                       >
                         {data.title}
                       </Link>
@@ -538,6 +522,14 @@ const SearchPage = () => {
                           <BsFillPeopleFill
                             className="icon people"
                             onClick={() => {
+                              const filteredUsernames = friendFavorites
+                                .filter((friend) =>
+                                  Object.values(friend.favoriteIds).includes(
+                                    data.contentid
+                                  )
+                                )
+                                .map((friend) => friend.username);
+                              setUsernames(filteredUsernames);
                               setModal(true);
                             }}
                           />
@@ -562,7 +554,7 @@ const SearchPage = () => {
               ></img>
             </div>
           )}
-          {modal && <Modalopen setModal={setModal} />}
+          {modal && <Modalopen setModal={setModal} usernames={usernames} />}
         </div>
 
         <div className="pagination">
@@ -583,7 +575,6 @@ const SearchPage = () => {
           </button>
         </div>
       </div>
-      {showPopup && <div className="popup-container">{popupContent}</div>}
     </>
   );
 };
