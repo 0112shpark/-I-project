@@ -152,7 +152,7 @@ const Nav = () => {
           <a href="/main" className="logo flex">
             <h1>
               <MdOutlineTravelExplore className="icon" />
-              Tourism.
+              K-Discovery.
             </h1>
           </a>
         </div>

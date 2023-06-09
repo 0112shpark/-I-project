@@ -461,7 +461,7 @@ const Chatbot = () => {
               className="chatbot-message"
               style={{
                 alignSelf: message.isBot ? "flex-start" : "flex-end",
-                backgroundColor: message.isBot ? "greenYellow" : "white",
+                backgroundColor: message.isBot ? "#AEE4FF" : "#FFD9C2",
                 whiteSpace: "pre-wrap",
               }}
             >
@@ -471,7 +471,7 @@ const Chatbot = () => {
                 (message.id === 2 ||
                   message.type === "recommend0" ||
                   message.type === "recommend1") && (
-                  <div className="button-container">
+                  <div className="button-containers">
                     <button
                       className="button buttonD"
                       onClick={() => handleDefaultButtonClicked()}
@@ -504,7 +504,7 @@ const Chatbot = () => {
                 defaultButtonOn &&
                 message.id !== 2 &&
                 message.type === "recommend" && (
-                  <div className="button-container">
+                  <div className="button-containers">
                     <button
                       className="button button1"
                       onClick={() => handleButtonClicked("recommend0")}
@@ -532,7 +532,7 @@ const Chatbot = () => {
                 message.id === 2 &&
                 (message.type === "recommend0" ||
                   message.type === "recommend1") && (
-                  <div className="button-container">
+                  <div className="button-containers">
                     <button
                       className="button buttonD"
                       onClick={() => handleDefaultButtonClicked()}

@@ -338,9 +338,7 @@ const Login = () => {
       <div className="overlay"></div>
       <div className="choose-form">
         <div className="title">
-          <h1 className="title__h1">
-            <br />
-          </h1>
+          <img src="/images/loginpage.png" className="welcome" alt="logo" />
         </div>
         <div className="buttons">
           <div id="signUp" className="buttons__signup" onClick={handleSignIn}>
@@ -398,13 +396,13 @@ const Login = () => {
 
           <div className="social-media">
             <h6 className="title__h2">Or connect with</h6>
-            <div
+            {/* <div
               className="buttons__signup buttons__signup--social"
               onClick={handleFaceBook}
             >
               <i className="fab fa-facebook-f" aria-hidden="true"></i>
               &nbsp;facebook
-            </div>
+            </div> */}
             <div
               className="buttons__signup buttons__signup--social"
               onClick={handleAuth}
@@ -477,13 +475,13 @@ const Login = () => {
 
           <div className="social-media">
             <h2 className="title__h2">Or connect with</h2>
-            <div
+            {/* <div
               className="buttons__signup buttons__signup--social"
               onClick={handleFaceBook}
             >
               <i className="fab fa-facebook-f" aria-hidden="true"></i>
               &nbsp;facebook
-            </div>
+            </div> */}
             <div
               className="buttons__signup buttons__signup--social"
               onClick={handleAuth}

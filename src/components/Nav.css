@@ -31,8 +31,8 @@ li {
   border-radius: 30px;
 }
 .logo {
-  color: var(--blackColor);
-  font-weight: 600;
+  color: var(--secondaryColor);
+  font-weight: 400;
   cursor: pointer;
   align-items: center;
   justify-content: center;

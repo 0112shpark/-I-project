@@ -175,12 +175,12 @@
   }
 }
 
-.button-container {
+.button-containers {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
-  gap: 10px;
+  gap: 5px;
 }
 
 .button {
@@ -192,30 +192,11 @@
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-.button:hover {
-  background-color: #e0e0e0;
-  color: black;
-}
-
-.buttonD {
-  background-color: #ffa726;
-  color: #fff;
-}
-
-.button1 {
-  background-color: #42a5f5;
-  color: #fff;
-}
-
-.button2 {
-  background-color: #ef5350;
-  color: #fff;
-}
 .exit {
-  background-color: violet;
+  background-color: #cbc7ff;
   color: #fff;
 }
 .loading-icon {
