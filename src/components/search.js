@@ -36,7 +36,7 @@ const Search = () => {
   return (
     <section className="search">
       <div className="overlay1"></div>
-      <video src={video} muted autoPlay loop type="video/mp4"></video>
+      <video src={video} muted autoPlay loop></video>
 
       <div className="searchContent Wrapper">
         <div className="textDiv">
