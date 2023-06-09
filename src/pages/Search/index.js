@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { HiSearch } from "react-icons/hi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 import { FiLoader } from "react-icons/fi";
 import { weather } from "../../api/weather";
@@ -26,7 +27,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-let friendFavorites = [];
+const friendFavorites = [];
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
   const { weatherinfo, weatherApiCall, resetweatherinfo } = weather({});
@@ -117,8 +118,6 @@ const SearchPage = () => {
     likedByFriends();
     let URL;
     setitem([]);
-    setUsernames([]);
-    friendFavorites = [];
     setRender("날씨 정보 받아오는 중...");
     setUpdatestat(false);
     setError(false);
@@ -313,11 +312,6 @@ const SearchPage = () => {
     return favoriteItems.includes(contentId);
   };
 
-  const gotoChat = (data) => {
-    navigate(
-      `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
-    );
-  };
   const handleinput = (event) => {
     const value = event.target.value;
     setKeyword(value);
@@ -357,6 +351,12 @@ const SearchPage = () => {
     setitem([]);
     resetweatherinfo();
     containerRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleMapMarkerClick = (title) => {
+    const searchQuery = encodeURIComponent(title);
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+    window.open(googleMapsUrl, "_blank");
   };
 
   const handleNextPageClick = () => {
@@ -451,28 +451,18 @@ const SearchPage = () => {
                       src={data.firstimage}
                       className="firstimage"
                       alt={data.title}
-                      onClick={() => {
-                        navigate(
-                          `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
-                        );
-                      }}
                     />
                   ) : (
                     <img
                       src="/images/noimage.jpg"
                       className="firstimage"
                       alt={data.title}
-                      onClick={() => {
-                        navigate(
-                          `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
-                        );
-                      }}
                     />
                   )}
                   <div className="item-details">
                     <h2 className="titles">
                       <Link
-                        to={`/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`}
+                        to={`/chat?contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`}
                       >
                         {data.title}
                       </Link>
@@ -533,6 +523,12 @@ const SearchPage = () => {
                               setModal(true);
                             }}
                           />
+                          <div classNmae="location">
+                            <FaMapMarkerAlt
+                              className="map-marker"
+                              onClick={() => handleMapMarkerClick(data.title)}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
