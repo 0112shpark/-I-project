@@ -338,7 +338,7 @@ const Login = () => {
       <div className="overlay"></div>
       <div className="choose-form">
         <div className="title">
-          <img src="/images/loginpage.png" className="welcome" alt="logo" />
+          <img src="/images/logo_black.png" className="welcome" alt="logo" />
         </div>
         <div className="buttons">
           <div id="signUp" className="buttons__signup" onClick={handleSignIn}>
