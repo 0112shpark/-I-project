@@ -151,8 +151,7 @@ const Nav = () => {
         <div className="logoDiv">
           <a href="/main" className="logo flex">
             <h1>
-              <MdOutlineTravelExplore className="icon" />
-              K-Discovery.
+              <MdOutlineTravelExplore className="icon" /> K-Discovery.
             </h1>
           </a>
         </div>

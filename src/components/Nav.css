@@ -42,6 +42,7 @@ li {
   color: var(--PrimaryColor);
   transform: translateY(5px);
 }
+
 .navBar {
   position: absolute;
   background: var(--whiteColorDeam);

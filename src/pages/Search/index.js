@@ -451,18 +451,28 @@ const SearchPage = () => {
                       src={data.firstimage}
                       className="firstimage"
                       alt={data.title}
+                      onClick={() => {
+                        navigate(
+                          `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
+                        );
+                      }}
                     />
                   ) : (
                     <img
                       src="/images/noimage.jpg"
                       className="firstimage"
                       alt={data.title}
+                      onClick={() => {
+                        navigate(
+                          `/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`
+                        );
+                      }}
                     />
                   )}
                   <div className="item-details">
                     <h2 className="titles">
                       <Link
-                        to={`/chat?contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`}
+                        to={`/chat?id=${userData.uid}&contentid=${data.contentid}&contenttypeid=${data.contenttypeid}&locationName=${data.title}`}
                       >
                         {data.title}
                       </Link>
@@ -523,7 +533,7 @@ const SearchPage = () => {
                               setModal(true);
                             }}
                           />
-                          <div classNmae="location">
+                          <div className="location">
                             <FaMapMarkerAlt
                               className="map-marker"
                               onClick={() => handleMapMarkerClick(data.title)}

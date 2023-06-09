@@ -7,7 +7,9 @@ const About = () => {
     <div className="container_about">
       <Nav></Nav>
       <div className="about_top">
-        <div className="about_box1"></div>
+        <div className="about_box1">
+          <img src="/images/logo.png" alt="logo" className="about-logo" />
+        </div>
         <div className="about_box2">Team 자반고등어</div>
         <div className="about_box3">
           K-Discovery 어플리케이션은 여러 관광명소 정보를 종합적으로 사용자에게

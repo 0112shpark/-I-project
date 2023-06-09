@@ -51,23 +51,11 @@
 }
 
 .about_box1 {
-  text-align: center;
-  position: relative;
-  display: block;
-
-  flex-direction: column;
-
-  margin: initial;
-  top: 10%;
-  right: initial;
-
-  left: 15%;
-  width: 70%;
-  height: 10%;
-  background: url("../../../public/images/fish_2.png") center no-repeat;
-  background-size: cover;
+  margin-top: 30px;
 }
-
+.about-logo {
+  border-radius: 20px;
+}
 .about_box2 {
   text-align: center;
   font-size: 27px;
@@ -79,12 +67,13 @@
   flex-direction: column;
 
   margin: initial;
-  top: 15%;
+  top: 20px;
   right: initial;
 
   left: initial;
   width: 100%;
   height: 5%;
+  margin-bottom: 20px;
 }
 
 .about_box3 {
@@ -96,8 +85,8 @@
 
   flex-direction: column;
 
-  margin: initial;
-  top: 20%;
+  margin-top: 20px;
+
   right: 5%;
 
   left: 5%;
@@ -116,7 +105,7 @@
   flex-direction: column;
 
   margin: initial;
-  top: 30%;
+  margin-top: 35px;
   right: 5%;
 
   left: 5%;

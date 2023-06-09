@@ -9,19 +9,10 @@ import { BiHappyAlt } from "react-icons/bi";
 import map_keys from "./sample.json";
 
 const my_apikey = process.env.REACT_APP_OPEN_API_KEY;
-console.log(my_apikey);
 
 //const openai = new OpenAIApi(configuration);
 
 const Chatbot = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "여행지 안내를 시작할게요!",
-      isBot: 1,
-      type: "auto", // 1) auto 2) recommend 3) introduce 4) details 5) user
-    },
-  ]);
   const [savedContext, setContextValue] = useState([]); //saved chat context
   const [inputValue, setInputValue] = useState("");
   const [buttonsOn, setButtons] = useState(false);
@@ -35,6 +26,15 @@ const Chatbot = () => {
   const [photoURL, setphotoURL] = useState("");
   const searchParams = new URLSearchParams(location.search);
   const userId = searchParams.get("id");
+  const where = searchParams.get("locationName");
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      text: `${where} 안내를 시작할게요!`,
+      isBot: 1,
+      type: "auto", // 1) auto 2) recommend 3) introduce 4) details 5) user
+    },
+  ]);
   var contenttypeid;
   var contentid;
   var locationName;
@@ -377,16 +377,16 @@ const Chatbot = () => {
       autoString = "질문에 대해 답변을 작성하고 있어요..";
     } else if (type === "introduce") {
       promptedString =
-        "여행지에 대한 설명을 제공할게. 설명을 이용해서 여행지에 대한 소개문을 세 문장 이내로 작성해줘. 해요체를 사용해.\n 설명 정보:\n" +
+        "여행지에 대한 설명을 제공할게. 설명을 이용해서 여행지에 대한 소개문을 세 문장 이내로 작성해줘. 해요체를 사용해줘.\n 설명 정보:\n" +
         savedContext[0];
-      userString = "여행지에 대해 소개해줘.";
-      autoString = "여행지에 대해 알아보고 있어요..";
+      userString = `${where} 에 대해 소개해줘.`;
+      autoString = `${where} 에 대해 알아보고 있어요..`;
     } else if (type === "details") {
       promptedString =
         "여행지에 대한 세부 정보와 형식을 제공할게. 모든 정보를 형식에 맞춰 나열해줘. 숫자로 표기된 값은 '있음'이나 '없음', '가능'이나 '불가능'으로 변환해. \n 세부 정보:\n" +
         savedContext[1] +
         "\n형식: - {세부 정보 이름} : {세부 정보 내용}\n- {세부 정보 이름} : {세부 정보 내용}\n...";
-      userString = "여행지의 세부 정보에 대해 알려줘.";
+      userString = `${where} 의 세부 정보에 대해 알려줘.`;
       autoString = "세부 정보에 대해 알아보고 있어요..";
     }
     //console.log(type,promptedString);
@@ -447,7 +447,7 @@ const Chatbot = () => {
           >
             &#8592;
           </button>
-          <div className="chatbot-header-text">Chatbot</div>
+          <div className="chatbot-header-text">{where}</div>
           <img
             className="user-img"
             src={photoURL}
@@ -482,13 +482,13 @@ const Chatbot = () => {
                       className="button button1"
                       onClick={() => handleButtonClicked("introduce")}
                     >
-                      <b>여행지에 대해 소개해줘.</b>
+                      <b>{where} 에 대해 소개해줘.</b>
                     </button>
                     <button
                       className="button button2"
                       onClick={() => handleButtonClicked("details")}
                     >
-                      <b>여행지의 세부 정보에 대해 알려줘.</b>
+                      <b>{where} 의 세부 정보에 대해 알려줘.</b>
                     </button>
                     <button
                       className="button exit"
@@ -543,13 +543,13 @@ const Chatbot = () => {
                       className="button button1"
                       onClick={() => handleButtonClicked("introduce")}
                     >
-                      <b>여행지에 대해 소개해줘.</b>
+                      <b>{where} 에 대해 소개해줘.</b>
                     </button>
                     <button
                       className="button button2"
                       onClick={() => handleButtonClicked("details")}
                     >
-                      <b>여행지의 세부 정보에 대해 알려줘.</b>
+                      <b>{where} 의 세부 정보에 대해 알려줘.</b>
                     </button>
                     <button
                       className="button exit"
@@ -566,7 +566,7 @@ const Chatbot = () => {
                 defaultButtonOn &&
                 message.id !== 2 &&
                 message.type === "introduce" && (
-                  <div className="button-container">
+                  <div className="button-containers">
                     <button
                       className="button buttonD"
                       onClick={() => handleDefaultButtonClicked()}
@@ -577,7 +577,7 @@ const Chatbot = () => {
                       className="button button2"
                       onClick={() => handleButtonClicked("details")}
                     >
-                      <b>여행지의 세부 정보에 대해 알려줘.</b>
+                      <b>{where} 의 세부 정보에 대해 알려줘.</b>
                     </button>
                     <button
                       className="button exit"
@@ -593,7 +593,7 @@ const Chatbot = () => {
                 defaultButtonOn &&
                 message.id !== 2 &&
                 message.type === "details" && (
-                  <div className="button-container">
+                  <div className="button-containers">
                     <button
                       className="button buttonD"
                       onClick={() => handleDefaultButtonClicked()}
@@ -604,7 +604,7 @@ const Chatbot = () => {
                       className="button button1"
                       onClick={() => handleButtonClicked("introduce")}
                     >
-                      <b>여행지에 대해 소개해줘.</b>
+                      <b>{where} 에 대해 소개해줘.</b>
                     </button>
                     <button
                       className="button exit"

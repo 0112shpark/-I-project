@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Nanum+Myeongjo:400,700");
+@import url("https://fonts.googleapis.com/css2?family=Diphylleia&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500&display=swap");
 .container {
   overflow: auto;
 }
@@ -129,11 +131,12 @@ img {
   text-align: center;
   word-break: break-all;
   cursor: pointer;
-  font-family: "Nanum Myeongjo";
+  font-family: "Diphylleia", serif;
   font-weight: 700;
+  text-decoration: none;
 }
 .titles:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 .item-details {
   display: flex;
@@ -208,6 +211,7 @@ img {
 .temperature,
 .humidity {
   margin-left: 5px;
+  font-family: "Fira Sans Extra Condensed", sans-serif;
 }
 .no-results {
   font-size: 18px;
