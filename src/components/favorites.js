@@ -50,7 +50,7 @@ const Favorites = () => {
 
   return (
     <div className="favorites-container">
-      <h2 className="favorites-heading">"{username}'s Favorites:</h2>
+      <h2 className="favorites-heading">"{username}"님의 좋아요 목록입니다.</h2>
       <div className="favorites-list">
         {favorites.map((favorite, index) => (
           <div key={index} className="favorite-item">

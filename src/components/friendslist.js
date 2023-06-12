@@ -52,7 +52,7 @@ const FriendList = () => {
   return (
     <div className="friends-container">
       <div className="friends-section">
-        <h2 className="friends-heading">"{myname}"'s Friends:</h2>
+        <h2 className="friends-heading">"{myname}"님의 친구목록입니다.</h2>
         <ul className="friends-list">
           {usernames.map(({ uid, username }, index) => (
             <li key={index} className="friend-item">

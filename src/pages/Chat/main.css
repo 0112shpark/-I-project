@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Dongle&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Diphylleia&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbit&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbit&display=swap");
 :after,
 :before {
   box-sizing: border-box;
@@ -134,8 +135,8 @@
   padding: 20px;
   height: 507.4px;
   overflow-y: scroll;
-  font-family: "Dongle", sans-serif;
-  font-size: 22px;
+  font-family: "Orbit", sans-serif;
+  font-size: 15px;
 }
 
 .chatbot-message {
@@ -201,6 +202,7 @@
   margin-bottom: 5px;
   font-family: "Diphylleia", serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 250px;
 }
 
 .exit {

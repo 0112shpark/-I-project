@@ -410,7 +410,7 @@ const SearchPage = () => {
           <div className="search-input">
             <input
               type="text"
-              placeholder="Enter name here..."
+              placeholder="ex) 경복궁"
               value={keyword}
               onChange={handleinput}
               onKeyDown={handleKeyDown}
@@ -421,7 +421,7 @@ const SearchPage = () => {
         <div className="option2">
           <div className="search-wrapper">
             <select value={option} onChange={handleOption}>
-              <option value="">--Please choose an option--</option>
+              <option value="">-- 전체검색 --</option>
               <option value="12">관광지</option>
               <option value="14">문화시설</option>
               <option value="15">행사/공연/축제</option>

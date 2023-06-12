@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Nanum+Myeongjo:400,700");
 @import url("https://fonts.googleapis.com/css2?family=Diphylleia&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 .container {
   overflow: auto;
 }
@@ -131,7 +132,7 @@ img {
   text-align: center;
   word-break: break-all;
   cursor: pointer;
-  font-family: "Diphylleia", serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
   text-decoration: none;
 }

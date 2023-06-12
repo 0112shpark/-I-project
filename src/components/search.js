@@ -40,16 +40,17 @@ const Search = () => {
 
       <div className="searchContent Wrapper">
         <div className="textDiv">
-          <span className="smallText">Tour</span>
-          <h1 className="searchTitle">Search your Tour Destination</h1>
+          <h1 className="searchTitle">
+            오늘은 <br></br>어디로 가볼까요?
+          </h1>
         </div>
         <div className="cardDiv grid">
           <div className="destination">
-            <label htmlFor="dest">Search your destination:</label>
+            <label htmlFor="dest">목적지를 입력해주세요:</label>
             <div className="input flex">
               <input
                 type="text"
-                placeholder="Enter name here..."
+                placeholder="ex) 경복궁"
                 value={keyword}
                 onChange={handleinput}
                 onKeyDown={handleKeyDown}
@@ -58,10 +59,10 @@ const Search = () => {
             </div>
           </div>
           <div className="option">
-            <label htmlFor="input flex">Second option:</label>
+            <label htmlFor="input flex">카테고리를 선택해주세요:</label>
             <div className="select-wrapper">
               <select value={option} onChange={handleOption}>
-                <option value="">--Please choose an option--</option>
+                <option value="">-- 전체검색 --</option>
                 <option value="12">관광지</option>
                 <option value="14">문화시설</option>
                 <option value="15">행사/공연/축제</option>

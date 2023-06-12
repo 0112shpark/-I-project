@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
 .container1 {
   display: flex;
   flex-direction: column;
@@ -71,11 +72,11 @@
   border-radius: 50%;
 }
 
-.img {
+/* .img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 .info-container {
   flex-grow: 1;
@@ -84,41 +85,75 @@
 .button-container {
   align-items: center;
 }
-
+.button-container.friend {
+  margin-bottom: 15px;
+  margin-top: 7px;
+}
+.nametag {
+  margin-top: 4px;
+  font-family: "Gowun Dodum", sans-serif;
+  text-align: center;
+  font-weight: bold;
+}
 .username {
   font-weight: bold;
   text-align: center;
-  margin: 7px;
+  font-size: 14px;
+  margin: 3px 5px 7px;
+  text-decoration: underline;
 }
-
-.link {
-  color: #4caf50;
+.my-option {
+  display: flex;
+  gap: 5px;
+}
+.link-button {
   text-decoration: none;
   transition: color 0.2s ease-in-out;
+  padding: 4px 8px;
+  background-color: #14d3ff;
+  color: #fff;
+  font-size: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Poor Story", cursive;
 }
-
-.link:hover {
-  color: #45a049;
+.link-button.like {
+  background-color: #ff6a89;
+}
+.change-pic {
+  display: flex;
+  gap: 5px;
 }
 .custom-button {
   padding: 4px 8px;
-  background-color: #ff6b6b;
+  background-color: #4caf50;
   color: #fff;
-  font-size: 12px;
+  font-size: 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  font-family: "Poor Story", cursive;
 }
-
+.custom-button.cancel {
+  background-color: #ff5675;
+  border-radius: 30px;
+}
+.custom-button.cancel:hover {
+  background-color: #ff5675;
+}
+.custom-button.set {
+  border-radius: 30px;
+}
 .custom-button:hover {
-  background-color: #ff4f4f;
-}
-.custom-button.friend-added-button {
   background-color: #4caf50;
 }
+.custom-button.friend-added-button {
+  background-color: #ff6b6b;
+}
 .custom-button.friend-added-button:hover {
-  background-color: #449d3c;
+  background-color: #ff6b6b;
 }
 
 .add-friend {
@@ -129,7 +164,8 @@
   background-color: #488ae1;
 }
 .change-picture {
-  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-top: 7px;
 }
 
 .upload-container {
@@ -143,16 +179,16 @@
   display: inline-block;
   position: relative;
   padding: 8px 12px;
-  background-color: #007bff;
+  background-color: #a8c8f9;
   color: #fff;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
-.file-input-label:hover {
-  background-color: #0056b3;
-}
+/* .file-input-label:hover {
+  background-color: #fc9ebd;
+} */
 
 .file-input {
   position: absolute;
@@ -165,6 +201,7 @@
 }
 
 .file-input-text {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
+  font-family: "Poor Story", cursive;
 }

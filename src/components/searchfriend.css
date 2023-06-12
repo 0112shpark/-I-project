@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
 .container1 {
   display: flex;
   flex-direction: column;
@@ -59,9 +61,10 @@
 .usernames-header {
   margin-bottom: 20px;
   font-size: 24px;
-  color: #333;
+  color: #db7093;
   text-align: center;
   position: relative;
+  font-family: "Gaegu", cursive;
   padding-bottom: 10px;
 }
 
@@ -96,6 +99,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  font-family: "Gowun Dodum", sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

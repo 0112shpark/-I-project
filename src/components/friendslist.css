@@ -75,8 +75,9 @@
   margin: 0 0 20px;
   font-size: 24px;
   font-weight: bold;
-  color: #333;
-  text-decoration: underline;
+  color: #9370db;
+  /* text-decoration: underline; */
+  font-family: "Gaegu", cursive;
 }
 
 .friends-list {
@@ -99,6 +100,7 @@
   padding: 16px;
   background-color: #e2f0f3; /* Choose your preferred background color */
   transition: background-color 0.2s ease-in-out;
+  font-family: "Gowun Dodum", sans-serif;
 }
 
 .friend-link {

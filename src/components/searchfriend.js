@@ -45,7 +45,7 @@ const SearchFriend = () => {
 
   return (
     <div className="usernames-container">
-      <h2 className="usernames-header">Search Results for "{userId}"</h2>
+      <h2 className="usernames-header">"{userId}" 에 대한 검색결과입니다.</h2>
       <ul className="usernames-list">
         {filteredUsernames.map(({ uid, username }, index) => (
           <li key={index} className="username-item">

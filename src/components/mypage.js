@@ -91,6 +91,7 @@ const Mypage = () => {
   };
   const handleChange = (event) => {
     const file = event.target.files[0];
+
     setProfilePicture(file);
   };
 
@@ -192,14 +193,14 @@ const Mypage = () => {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="Search for friends names..."
+            placeholder="친구이름을 검색하세요"
             value={searchQuery}
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
             className="search-input"
           />
           <button className="search-button" onClick={handleSearchClick}>
-            Search
+            검색
           </button>
         </div>
         <div className="flex-container">
@@ -210,6 +211,12 @@ const Mypage = () => {
               alt={userId && userId.displayName}
             />
           </div>
+          {username && (
+            <>
+              <span className="nametag">사용자 이름 :</span>
+              <p className="username">{username}</p>
+            </>
+          )}
           <div className="change-picture">
             {userId === userData?.uid && (
               <div className="upload-container">
@@ -220,15 +227,27 @@ const Mypage = () => {
                     accept="image/*"
                     className="file-input"
                   />
-                  <span className="file-input-text">Change photo</span>
+                  <span className="file-input-text">프로필 사진 변경</span>
                 </label>
                 {profilePicture && (
-                  <button
-                    className="custom-button"
-                    onClick={handleChangePicture}
-                  >
-                    Change Profile Picture
-                  </button>
+                  <>
+                    <div className="change-pic">
+                      <button
+                        className="custom-button set"
+                        onClick={handleChangePicture}
+                      >
+                        적용하기
+                      </button>
+                      <button
+                        className="custom-button cancel"
+                        onClick={() => {
+                          setProfilePicture(null);
+                        }}
+                      >
+                        취소
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
             )}
@@ -236,46 +255,38 @@ const Mypage = () => {
 
           <div className="info-container">
             {userId !== userData?.uid && (
-              <div className="button-container">
+              <div className="button-container friend">
                 <button
                   className={`custom-button ${
                     isFriendAdded ? "friend-added-button" : "add-friend-button"
                   }`}
                   onClick={handleAddFriend}
                 >
-                  {isFriendAdded ? "Friend Added" : "Add Friend"}
+                  {isFriendAdded ? "친구 삭제" : "친구 추가"}
                 </button>
                 <button
                   className="custom-button add-friend"
                   onClick={handleMyPage}
                 >
-                  My Profile
+                  내 정보
                 </button>
               </div>
             )}
-            {username && (
-              <p className="username">
-                UserName: <br></br>
-                {username}
-              </p>
-            )}
           </div>
-          <div>
-            <a
-              href="#"
+          <div className="my-option">
+            <button
               onClick={(event) => handleFriendsClick(userId, event)}
-              className="link"
+              className="link-button"
             >
-              Friends
-            </a>
+              친구목록
+            </button>
+            <button
+              onClick={(event) => handleFavoritesClick(userId, event)}
+              className="link-button like"
+            >
+              좋아요
+            </button>
           </div>
-          <a
-            href="#"
-            onClick={(event) => handleFavoritesClick(userId, event)}
-            className="link"
-          >
-            Favorites
-          </a>
         </div>
       </div>
     </div>
