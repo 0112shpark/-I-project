@@ -89,6 +89,10 @@ img {
   text-align: center;
   font-weight: bold;
 }
+.load-warn {
+  color: red;
+  text-decoration: underline;
+}
 .search-results {
   position: relative;
   min-height: 370px;

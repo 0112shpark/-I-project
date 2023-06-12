@@ -440,6 +440,9 @@ const SearchPage = () => {
         }
         <div className="search-topics">
           "{searchTerm}"에 대한 {handlecategory()} 검색 결과입니다.
+          <div className="load-warn">
+            10초이상 로딩이 되지 않으면 재접속 해주세요.
+          </div>
         </div>
         <div className="search-results">
           {updatestat ? (
