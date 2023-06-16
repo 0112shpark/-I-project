@@ -217,7 +217,7 @@ const Chatbot = () => {
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: msg }],
       // max_tokens: 4096,
-      temperature: 0.7,
+      temperature: 0.2,
       // frequency_penalty: 1.0,
       // stream: true,
     };
