@@ -27,7 +27,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const friendFavorites = [];
+let friendFavorites = [];
 const SearchPage = () => {
   const [keyword, setKeyword] = useState("");
   const { weatherinfo, weatherApiCall, resetweatherinfo } = weather({});
@@ -116,6 +116,7 @@ const SearchPage = () => {
     };
     loadFavorites();
     likedByFriends();
+    friendFavorites = [];
     let URL;
     setitem([]);
     setRender("날씨 정보 받아오는 중...");
@@ -330,6 +331,7 @@ const SearchPage = () => {
 
   const handlesearch = (e) => {
     if (updatestat) {
+      friendFavorites = [];
       resetweatherinfo();
       navigate(`/search?q=${keyword}&id=${option}`);
       setCurrentPage(1);
